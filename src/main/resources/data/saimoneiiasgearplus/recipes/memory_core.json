@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " a ",
+    "aba",
+    " a "
+  ],
+  "key": {
+    "a": {
+      "item": "saimoneiiasgearplus:enchanted_ingot"
+    },
+    "b": {
+      "item": "saimoneiiasgearplus:enchanted_crystal"
+    }
+  },
+  "result": {
+    "item": "saimoneiiasgearplus:memory_core"
+  }
+}

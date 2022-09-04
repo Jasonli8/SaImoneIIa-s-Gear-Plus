@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "minecraft:experience_bottle"
+  },
+  "result": "saimoneiiasgearplus:pure_experience",
+  "experience": 0
+}

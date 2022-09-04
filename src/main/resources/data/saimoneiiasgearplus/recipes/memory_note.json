@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "saimoneiiasgearplus:pure_experience"
+    }
+  ],
+  "result": {
+    "item": "saimoneiiasgearplus:memory_note"
+  }
+}
