@@ -34,8 +34,12 @@ public class MemoryProgression {
         return memProg / 10; // change with xp scaling
     }
 
+    public int getRequiredProg() {
+        return 10; // change with xp scaling
+    }
+
     public int getProg() {
-        return memProg % 10; // change with xp scaling
+        return memProg % this.getRequiredProg(); // change with xp scaling
     }
 
     public void copyFrom(MemoryProgression source) {

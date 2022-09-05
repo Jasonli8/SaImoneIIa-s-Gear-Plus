@@ -7,6 +7,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
 import saimoneiia.mods.saimoneiiasgearplus.init.custom.MemoryNoteItem;
+import saimoneiia.mods.saimoneiiasgearplus.init.custom.PlayerCardItem;
 
 public class ItemInit {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, SaimoneiiasGearPlus.MODID);
@@ -21,6 +22,9 @@ public class ItemInit {
     public static final RegistryObject<Item> MEMORY_NOTE =
             ITEMS.register("memory_note",
                     () -> new MemoryNoteItem(new Item.Properties().tab(SaimoneiiasGearPlus.TAB).stacksTo(16)));
+    public static final RegistryObject<Item> PLAYER_CARD =
+            ITEMS.register("player_card",
+                    () -> new PlayerCardItem(new Item.Properties().tab(SaimoneiiasGearPlus.TAB).stacksTo(1)));
     public static final RegistryObject<Item> PURE_EXPERIENCE =
             ITEMS.register("pure_experience",
                     () -> new Item(new Item.Properties().tab(SaimoneiiasGearPlus.TAB).stacksTo(16)));

@@ -2,3 +2,4 @@ recipe unlocking
 xp to level list
 mem prog hud
 memory core textures
+memory progression screen texture (as textures/gui/memoryprogressionscreen.png
