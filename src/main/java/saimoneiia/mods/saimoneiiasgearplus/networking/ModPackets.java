@@ -7,7 +7,7 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
-import saimoneiia.mods.saimoneiiasgearplus.networking.packet.MemoryC2SPacket;
+import saimoneiia.mods.saimoneiiasgearplus.networking.packet.MemoryS2CPacket;
 
 public class ModPackets {
     private static SimpleChannel INSTANCE;
@@ -26,10 +26,10 @@ public class ModPackets {
 
         INSTANCE = net;
 
-        net.messageBuilder(MemoryC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(MemoryC2SPacket::new)
-                .encoder(MemoryC2SPacket::toBytes)
-                .consumer(MemoryC2SPacket::handle)
+        net.messageBuilder(MemoryS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(MemoryS2CPacket::new)
+                .encoder(MemoryS2CPacket::toBytes)
+                .consumer(MemoryS2CPacket::handle)
                 .add();
     }
 

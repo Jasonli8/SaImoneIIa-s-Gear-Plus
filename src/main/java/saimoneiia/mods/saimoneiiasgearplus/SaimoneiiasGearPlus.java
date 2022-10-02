@@ -1,5 +1,6 @@
 package saimoneiia.mods.saimoneiiasgearplus;
 
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -10,7 +11,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.jetbrains.annotations.NotNull;
+import saimoneiia.mods.saimoneiiasgearplus.client.memoryprogression.MemoryProgressionScreen;
 import saimoneiia.mods.saimoneiiasgearplus.init.BlockInit;
+import saimoneiia.mods.saimoneiiasgearplus.init.ContainerInit;
 import saimoneiia.mods.saimoneiiasgearplus.init.ItemInit;
 import saimoneiia.mods.saimoneiiasgearplus.networking.ModPackets;
 
@@ -25,6 +28,7 @@ public class SaimoneiiasGearPlus {
         // Initialize basic items
         ItemInit.ITEMS.register(bus);
         BlockInit.BLOCKS.register(bus);
+        ContainerInit.CONTAINERS.register(bus);
 
         bus.addListener(this::commonSetup);
 
@@ -50,7 +54,7 @@ public class SaimoneiiasGearPlus {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-
+            MenuScreens.register(ContainerInit.MEMORY_PROGRESSION.get(), MemoryProgressionScreen::new);
         }
     }
 }
