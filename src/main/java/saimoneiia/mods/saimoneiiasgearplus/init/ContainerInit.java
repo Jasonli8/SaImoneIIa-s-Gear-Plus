@@ -10,7 +10,6 @@ import saimoneiia.mods.saimoneiiasgearplus.client.memoryprogression.MemoryProgre
 
 public class ContainerInit {
     private ContainerInit() {}
-
-    public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, SaimoneiiasGearPlus.MODID);
+    public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, SaimoneiiasGearPlus.MODID);
     public static final RegistryObject<MenuType<MemoryProgressionContainer>> MEMORY_PROGRESSION = CONTAINERS.register("memory_progression", () -> new MenuType<>(MemoryProgressionContainer::new));
 }

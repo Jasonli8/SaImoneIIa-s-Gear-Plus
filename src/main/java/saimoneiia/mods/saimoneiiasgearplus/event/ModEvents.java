@@ -8,7 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -35,8 +35,8 @@ public class ModEvents {
     }
 
     @SubscribeEvent
-    public static void onPlayerJoinWorld(EntityJoinWorldEvent event) {
-        if(!event.getWorld().isClientSide()) {
+    public static void onPlayerJoinWorld(EntityJoinLevelEvent event) {
+        if(!event.getLevel().isClientSide()) {
             if (event.getEntity() instanceof ServerPlayer player) {
                 player.getCapability(MemoryProgressionProvider.PLAYER_MEM_PROG).ifPresent(memProg -> {
                     ModPackets.sendToPlayer(new MemoryS2CPacket(memProg.getMem()), player);
@@ -47,7 +47,7 @@ public class ModEvents {
 
     @SubscribeEvent
     public static void onPlayerCloned(PlayerEvent.Clone event) {
-        event.getPlayer().getCapability(MemoryProgressionProvider.PLAYER_MEM_PROG).ifPresent(newStore -> {
+        event.getEntity().getCapability(MemoryProgressionProvider.PLAYER_MEM_PROG).ifPresent(newStore -> {
             event.getOriginal().reviveCaps();
             event.getOriginal().getCapability(MemoryProgressionProvider.PLAYER_MEM_PROG).ifPresent(oldStore -> {
                 newStore.copyFrom(oldStore);

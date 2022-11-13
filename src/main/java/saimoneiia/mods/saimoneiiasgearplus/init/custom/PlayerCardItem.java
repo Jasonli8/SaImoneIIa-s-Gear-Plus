@@ -29,7 +29,7 @@ public class PlayerCardItem extends Item{
                 ModPackets.sendToPlayer(new MemoryS2CPacket(memProg.getMem()), (ServerPlayer) player);
             });
             MenuProvider container = new SimpleMenuProvider(MemoryProgressionContainer.getServerContainer(), Component.literal("Memory Field"));
-            NetworkHooks.openGui((ServerPlayer) player, container);
+            NetworkHooks.openScreen((ServerPlayer) player, container);
         }
 
         return InteractionResultHolder.pass(player.getItemInHand(hand));
