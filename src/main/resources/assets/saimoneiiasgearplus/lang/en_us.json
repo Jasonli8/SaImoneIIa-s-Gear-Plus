@@ -9,6 +9,11 @@
   "item.saimoneiiasgearplus.enchanted_fabric": "Enchanted Fabric",
   "item.saimoneiiasgearplus.enchanted_ingot": "Enchanted Ingot",
   "item.saimoneiiasgearplus.enchanted_crystal": "Enchanted Crystal",
+  "item.saimoneiiasgearplus.example_belt": "Example Belt",
+  "item.saimoneiiasgearplus.example_charm": "Example Charm",
+  "item.saimoneiiasgearplus.example_ring": "Example Ring",
+  "item.saimoneiiasgearplus.example_hand": "Example Hand",
+  "item.saimoneiiasgearplus.example_necklace": "Example Necklace",
   "block.saimoneiiasgearplus.memory_core": "Memory Core",
   "curios.identifier.weapon": "Weapon"
 }
