@@ -9,5 +9,6 @@
   "item.saimoneiiasgearplus.enchanted_fabric": "Enchanted Fabric",
   "item.saimoneiiasgearplus.enchanted_ingot": "Enchanted Ingot",
   "item.saimoneiiasgearplus.enchanted_crystal": "Enchanted Crystal",
-  "block.saimoneiiasgearplus.memory_core": "Memory Core"
+  "block.saimoneiiasgearplus.memory_core": "Memory Core",
+  "curios.identifier.weapon": "Weapon"
 }
