@@ -15,6 +15,7 @@ import saimoneiia.mods.saimoneiiasgearplus.client.memoryprogression.MemoryProgre
 import saimoneiia.mods.saimoneiiasgearplus.init.BlockInit;
 import saimoneiia.mods.saimoneiiasgearplus.init.ContainerInit;
 import saimoneiia.mods.saimoneiiasgearplus.init.ItemInit;
+import saimoneiia.mods.saimoneiiasgearplus.integration.CurioIntegration;
 import saimoneiia.mods.saimoneiiasgearplus.networking.ModPackets;
 
 @Mod(SaimoneiiasGearPlus.MODID)
@@ -31,6 +32,7 @@ public class SaimoneiiasGearPlus {
         ContainerInit.CONTAINERS.register(bus);
 
         bus.addListener(this::commonSetup);
+        CurioIntegration.init();
 
         MinecraftForge.EVENT_BUS.register(this);
     }
