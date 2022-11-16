@@ -1,6 +1,7 @@
 {
     "replace": false,
     "values": [
-        "saimoneiiasgearplus:example_weapon"
+        "saimoneiiasgearplus:example_weapon",
+        "saimoneiiasgearplus:mito_single_sword"
     ]
 }

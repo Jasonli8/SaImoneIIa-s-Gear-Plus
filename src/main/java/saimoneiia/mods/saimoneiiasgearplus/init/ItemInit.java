@@ -41,5 +41,6 @@ public class ItemInit {
     public static final RegistryObject<Item> EXAMPLE_RING = ITEMS.register("example_ring", BasicRings.ExampleRing::new);
     public static final RegistryObject<Item> EXAMPLE_BELT = ITEMS.register("example_belt", BasicBelts.ExampleBelt::new);
     // 5. weapons
+    public static final RegistryObject<Item> MITO_SWORD_SINGLE = ITEMS.register("mito_single_sword", () -> new Item(new Item.Properties().tab(SaimoneiiasGearPlus.TAB).stacksTo(1)));
     // 6. armour
 }
