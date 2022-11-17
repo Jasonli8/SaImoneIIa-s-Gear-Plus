@@ -1,16 +1,13 @@
 package saimoneiia.mods.saimoneiiasgearplus.client.memoryprogression;
 
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.MenuConstructor;
 import net.minecraft.world.item.ItemStack;
-import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
 import saimoneiia.mods.saimoneiiasgearplus.init.ContainerInit;
-import saimoneiia.mods.saimoneiiasgearplus.player.MemoryProgressionProvider;
+import saimoneiia.mods.saimoneiiasgearplus.player.memoryprogression.MemoryProgressionProvider;
 
 public class MemoryProgressionContainer extends AbstractContainerMenu {
     private final Player player;

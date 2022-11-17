@@ -1,4 +1,4 @@
-package saimoneiia.mods.saimoneiiasgearplus.player;
+package saimoneiia.mods.saimoneiiasgearplus.player.memoryprogression;
 
 import net.minecraft.nbt.CompoundTag;
 import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;

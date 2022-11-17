@@ -7,10 +7,9 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.commands.ExperienceCommand;
 import net.minecraft.server.level.ServerPlayer;
-import saimoneiia.mods.saimoneiiasgearplus.player.MemoryProgression;
-import saimoneiia.mods.saimoneiiasgearplus.player.MemoryProgressionProvider;
+import saimoneiia.mods.saimoneiiasgearplus.player.memoryprogression.MemoryProgression;
+import saimoneiia.mods.saimoneiiasgearplus.player.memoryprogression.MemoryProgressionProvider;
 
 import java.util.Collection;
 

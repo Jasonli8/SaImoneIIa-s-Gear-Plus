@@ -1,32 +1,16 @@
 package saimoneiia.mods.saimoneiiasgearplus.client.memoryprogression;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
-import net.minecraft.client.gui.screens.inventory.EnchantmentNames;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
-import saimoneiia.mods.saimoneiiasgearplus.player.MemoryProgressionProvider;
 
 @OnlyIn(Dist.CLIENT)
 public class MemoryProgressionScreen extends AbstractContainerScreen<MemoryProgressionContainer> {

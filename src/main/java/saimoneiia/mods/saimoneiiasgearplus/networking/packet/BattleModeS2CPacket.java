@@ -1,36 +1,28 @@
 package saimoneiia.mods.saimoneiiasgearplus.networking.packet;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
+import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeData;
 import saimoneiia.mods.saimoneiiasgearplus.client.memoryprogression.ClientMemoryProgressionData;
 import saimoneiia.mods.saimoneiiasgearplus.networking.ModPackets;
 
 import java.util.function.Supplier;
 
-// sync player memory progression on server side to client side
-// currently only used for displaying progression when using player card item
-public class MemoryS2CPacket {
-    private final int memory;
+public class BattleModeS2CPacket {
+    private final boolean isBattleMode;
 
-    public MemoryS2CPacket(int memory) {
-        this.memory = memory;
-    }
+    public BattleModeS2CPacket(boolean isBattleMode) { this.isBattleMode = isBattleMode; }
 
-    public MemoryS2CPacket(FriendlyByteBuf buf) {
-        this.memory = buf.readInt();
-    }
+    public BattleModeS2CPacket(FriendlyByteBuf buf) { this.isBattleMode = buf.readBoolean(); }
 
-    public void toBytes(FriendlyByteBuf buf) {
-        buf.writeInt(memory);
-    }
+    public void toBytes(FriendlyByteBuf buf) { buf.writeBoolean(isBattleMode); }
 
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
-            // code on client
             ModPackets.register();
-            ClientMemoryProgressionData.set(memory);
+            // code on client
+            ClientBattleModeData.set(isBattleMode);
         });
         return true;
     }

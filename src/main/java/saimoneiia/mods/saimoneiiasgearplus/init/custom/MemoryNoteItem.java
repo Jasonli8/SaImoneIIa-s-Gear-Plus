@@ -11,7 +11,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import saimoneiia.mods.saimoneiiasgearplus.init.BlockInit;
-import saimoneiia.mods.saimoneiiasgearplus.player.MemoryProgressionProvider;
+import saimoneiia.mods.saimoneiiasgearplus.player.memoryprogression.MemoryProgressionProvider;
 
 public class MemoryNoteItem extends Item {
     public MemoryNoteItem(Properties properties) {

@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import saimoneiia.mods.saimoneiiasgearplus.client.memoryprogression.MemoryProgressionContainer;
 import saimoneiia.mods.saimoneiiasgearplus.networking.ModPackets;
 import saimoneiia.mods.saimoneiiasgearplus.networking.packet.MemoryS2CPacket;
-import saimoneiia.mods.saimoneiiasgearplus.player.MemoryProgressionProvider;
+import saimoneiia.mods.saimoneiiasgearplus.player.memoryprogression.MemoryProgressionProvider;
 
 public class PlayerCardItem extends Item{
     public PlayerCardItem(Item.Properties properties) {

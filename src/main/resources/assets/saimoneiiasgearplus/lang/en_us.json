@@ -1,7 +1,9 @@
 {
-  "item.saimoneiiasgearplus.example_item": "Example Item",
-  "block.saimoneiiasgearplus.example_block": "Example Block",
+  "curios.identifier.weapon": "Weapon",
+
   "itemGroup.saimoneiiasgearplus": "SaImoneIIa's Gear Plus",
+
+  "item.saimoneiiasgearplus.example_item": "Example Item",
   "item.saimoneiiasgearplus.memory_note": "Memory Note",
   "item.saimoneiiasgearplus.player_card": "Player Card",
   "item.saimoneiiasgearplus.pure_experience": "Pure Experience",
@@ -15,6 +17,10 @@
   "item.saimoneiiasgearplus.example_hand": "Example Hand",
   "item.saimoneiiasgearplus.example_necklace": "Example Necklace",
   "item.saimoneiiasgearplus.mito_single_sword": "Water's Edge",
+
+  "block.saimoneiiasgearplus.example_block": "Example Block",
   "block.saimoneiiasgearplus.memory_core": "Memory Core",
-  "curios.identifier.weapon": "Weapon"
+
+  "key.category.saimoneiiasgearplus.battle": "SaImoneIIa's Gear Plus",
+  "key.saimoneiiasgearplus.toggleBattleMode": "Toggle Battle Mode"
 }
