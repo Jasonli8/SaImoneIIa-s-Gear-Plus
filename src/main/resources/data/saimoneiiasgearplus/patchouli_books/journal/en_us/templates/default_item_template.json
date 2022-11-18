@@ -1,0 +1,10 @@
+{
+  "components": [
+    {
+      "type": "patchouli:item",
+      "item": "#item",
+      "x": 50,
+      "y": 10
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Pure Experience",
+  "icon": "saimoneiiasgearplus:pure_experience",
+  "category": "saimoneiiasgearplus:basics",
+  "pages": [
+    {
+      "type": "saimoneiiasgearplus:intro_aside_template",
+      "title": "Pure Experience",
+      "text": "Today, I relealized how beautiful experience orbs are. It took a while, but I managed to recreate them. Seems kind of pointless besides that, but who knows...",
+      "image": "saimoneiiasgearplus:textures/items/pure_experience.png"
+    }
+  ]
+}

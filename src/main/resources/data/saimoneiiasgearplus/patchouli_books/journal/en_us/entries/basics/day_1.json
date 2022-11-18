@@ -1,0 +1,11 @@
+{
+  "name": "Day 1",
+  "icon": "minecraft:writable_book",
+  "category": "saimoneiiasgearplus:basics",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This world holds many mysteries. I've been told stories of legends that once roamed this world long before me. With all the magic in the world, many seem quite plausible, but some seem far-fetched that it's hard to believe them or not in spite of that. But, if there is any, even the slightest, chance that they are true, I wish to become like them one day..."
+    }
+  ]
+}
