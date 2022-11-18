@@ -21,6 +21,8 @@ minecraft {
             workingDirectory project.file('run')
 
             property 'forge.enabledGameTestNamespaces', archivesBaseName
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             mods {
                 saimoneiiasgearplus {
@@ -73,13 +75,17 @@ repositories {
     maven {
         url = "https://maven.theillusivec4.top/"
     }
+    maven {
+        url 'https://maven.blamejared.com'
+    }
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.19.2-43.1.52'
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.19.2-5.1.1.0")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.19.2-5.1.1.0:api")
-    
+    compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.19.2-77:api")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.19.2-77")
 }
 
 jar {
