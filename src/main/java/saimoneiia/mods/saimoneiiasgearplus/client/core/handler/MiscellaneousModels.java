@@ -20,18 +20,22 @@ public class MiscellaneousModels {
 
     private MiscellaneousModels() {}
 
-    public BakedModel exampleCharm;
+    public BakedModel exampleCharm, exampleNecklace, mitoSingleSword;
 
     public void onModelBake(ModelBakery loader, Map<ResourceLocation, BakedModel> map) {
         if (!registeredModels) {
             return;
         }
         exampleCharm = map.get(new ResourceLocation(SaimoneiiasGearPlus.MODID, "item/example_charm"));
+        exampleNecklace = map.get(new ResourceLocation(SaimoneiiasGearPlus.MODID, "item/example_necklace"));
+        mitoSingleSword = map.get(new ResourceLocation(SaimoneiiasGearPlus.MODID, "item/mito_single_sword"));
     }
 
     public void onModelRegister(ResourceManager rm, Consumer<ResourceLocation> consumer) {
 
         consumer.accept(new ResourceLocation(SaimoneiiasGearPlus.MODID, "item/example_charm"));
+        consumer.accept(new ResourceLocation(SaimoneiiasGearPlus.MODID, "item/example_necklace"));
+        consumer.accept(new ResourceLocation(SaimoneiiasGearPlus.MODID, "item/mito_single_sword"));
 
         if (!registeredModels) {
             registeredModels = true;

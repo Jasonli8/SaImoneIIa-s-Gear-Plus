@@ -1,5 +1,6 @@
 package saimoneiia.mods.saimoneiiasgearplus.integration;
 
+import com.google.common.collect.Multimap;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;
@@ -7,14 +8,17 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
+import org.jetbrains.annotations.NotNull;
 import saimoneiia.mods.saimoneiiasgearplus.client.render.EquipmentRenderRegistry;
-import saimoneiia.mods.saimoneiiasgearplus.init.gear.accessories.BaseAccessory;
+import saimoneiia.mods.saimoneiiasgearplus.init.gear.BaseEquipment;
 import saimoneiia.mods.saimoneiiasgearplus.proxy.Proxy;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
@@ -22,6 +26,9 @@ import top.theillusivec4.curios.api.SlotTypeMessage;
 import top.theillusivec4.curios.api.SlotTypePreset;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 import top.theillusivec4.curios.api.client.ICurioRenderer;
+import top.theillusivec4.curios.api.type.capability.ICurio;
+
+import java.util.UUID;
 
 public class CurioIntegration{
     public static void init() {
@@ -40,6 +47,49 @@ public class CurioIntegration{
         Proxy.INSTANCE.runOnClient(() -> () -> CuriosRendererRegistry.register(item, () -> Renderer.INSTANCE));
     }
 
+    public static class Wrapper implements ICurio {
+
+        private final ItemStack stack;
+
+        Wrapper(ItemStack stack) {
+            this.stack = stack;
+        }
+
+        private BaseEquipment getItem() {
+            return (BaseEquipment) stack.getItem();
+        }
+
+        @Override
+        public ItemStack getStack() {
+            return stack;
+        }
+
+        @Override
+        public void curioTick(SlotContext slotContext) {
+            getItem().itemTick(stack, slotContext.entity());
+        }
+
+        @Override
+        public boolean canEquip(SlotContext slotContext) {
+            return getItem().canEquip(stack, slotContext.entity());
+        }
+
+        @Override
+        public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid) {
+            return getItem().getEquippedAttributeModifiers(stack);
+        }
+
+        @Override
+        public boolean canSync(SlotContext slotContext) {
+            return true;
+        }
+
+        @Override
+        public boolean canEquipFromUse(SlotContext slotContext) {
+            return true;
+        }
+    }
+
     private static class Renderer implements ICurioRenderer {
         private static final Renderer INSTANCE = new Renderer();
 
@@ -51,7 +101,11 @@ public class CurioIntegration{
                     float ageInTicks, float netHeadYaw, float headPitch) {
             LivingEntity livingEntity = slotContext.entity();
             M contextModel = renderLayerParent.getModel();
-            BaseAccessory item = (BaseAccessory) stack.getItem();
+            BaseEquipment item = (BaseEquipment) stack.getItem();
+
+            if (!item.hasRender(stack, livingEntity)) {
+                return;
+            }
 
             if (!(contextModel instanceof HumanoidModel<?>)) {
                 return;

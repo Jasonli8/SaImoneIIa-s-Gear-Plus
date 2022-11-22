@@ -24,7 +24,6 @@ import saimoneiia.mods.saimoneiiasgearplus.networking.packet.MemoryS2CPacket;
 public class ClientEvents {
     @SubscribeEvent
     public static void onModelRegister(ModelEvent.RegisterAdditional evt) {
-        System.out.println("onModelRegister called"); // debug
         var resourceManager = Minecraft.getInstance().getResourceManager();
         MiscellaneousModels.INSTANCE.onModelRegister(resourceManager, evt::register);
     }
@@ -32,8 +31,6 @@ public class ClientEvents {
 
     @SubscribeEvent
     public static void onModelBake(ModelEvent.BakingCompleted evt) {
-        System.out.println("onModelBake called"); // debug
-
         MiscellaneousModels.INSTANCE.onModelBake(evt.getModelBakery(), evt.getModels());
     }
     @Mod.EventBusSubscriber(modid=SaimoneiiasGearPlus.MODID, value=Dist.CLIENT)
@@ -42,7 +39,6 @@ public class ClientEvents {
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event) {
             if(KeyBinding.TOGGLE_BATTLE_MODE_KEY.consumeClick()) {
-                // TODO: implement toggle_battle_mode
                 ClientBattleModeData.toggle();
                 ModPackets.sendToServer(new BattleModeC2SPacket(ClientBattleModeData.get()));
 

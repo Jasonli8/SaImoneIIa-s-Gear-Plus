@@ -14,18 +14,18 @@ import net.minecraft.world.item.ItemStack;
 import saimoneiia.mods.saimoneiiasgearplus.client.core.handler.MiscellaneousModels;
 import saimoneiia.mods.saimoneiiasgearplus.client.render.EquipmentRenderRegistry;
 import saimoneiia.mods.saimoneiiasgearplus.client.render.EquipmentRenderer;
-import saimoneiia.mods.saimoneiiasgearplus.init.gear.accessories.BaseAccessory;
+import saimoneiia.mods.saimoneiiasgearplus.init.gear.BaseEquipment;
 import saimoneiia.mods.saimoneiiasgearplus.proxy.Proxy;
 
 public class BasicCharms {
-    public static class ExampleCharm extends BaseAccessory {
+    public static class ExampleCharm extends BaseEquipment {
         public ExampleCharm() {
             super();
             Proxy.INSTANCE.runOnClient(() -> () -> EquipmentRenderRegistry.register(this, new Renderer()));
         }
 
         @Override
-        public void itemTick() {
+        public void itemTick(ItemStack stack, LivingEntity livingEntity) {
             // add some functionality here
         }
 
