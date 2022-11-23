@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "saimoneiia.mods.saimoneiiasgearplus.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "MixinPlayer"
+  ],
+  "client": [
+    "MixinLocalPlayer",
+    "MixinPlayer"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "saimoneiiasgearplus.refmap.json"
+}
