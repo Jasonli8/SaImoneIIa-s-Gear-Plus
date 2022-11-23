@@ -1,12 +1,13 @@
 package saimoneiia.mods.saimoneiiasgearplus.client.memoryprogression;
 
-// unique for each client, only used client side
-public class ClientMemoryProgressionData {
-    private static int playerMemory;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-    public static void set(int memory) {
-        ClientMemoryProgressionData.playerMemory = memory;
-    }
+@OnlyIn(Dist.CLIENT)
+public class ClientMemoryProgressionData {
+    private static int playerMemory = 0;
+
+    public static void set(int memory) { playerMemory = memory; }
 
     public static int getPlayerMemory() {
         return playerMemory;

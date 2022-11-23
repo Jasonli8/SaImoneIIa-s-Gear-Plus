@@ -20,8 +20,6 @@ public class BattleModeC2SPacket {
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
-            ModPackets.register();
-            // code on server
             ServerPlayer player = context.getSender();
 
             player.getCapability(BattleModeProvider.PLAYER_BATTLE_MODE).ifPresent(battleMode -> {

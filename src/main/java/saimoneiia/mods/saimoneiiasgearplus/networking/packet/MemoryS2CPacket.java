@@ -28,8 +28,6 @@ public class MemoryS2CPacket {
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
-            // code on client
-            ModPackets.register();
             ClientMemoryProgressionData.set(memory);
         });
         return true;
