@@ -20,7 +20,10 @@ public class MiscellaneousModels {
 
     private MiscellaneousModels() {}
 
-    public BakedModel exampleCharm, exampleNecklace, mitoSingleSword;
+    public BakedModel
+            exampleCharm,
+            exampleNecklace,
+            mitoSingleSword, mitoSingleSwordBlade, mitoSingleSwordSheath;
 
     public void onModelBake(ModelBakery loader, Map<ResourceLocation, BakedModel> map) {
         if (!registeredModels) {
@@ -29,6 +32,8 @@ public class MiscellaneousModels {
         exampleCharm = map.get(new ResourceLocation(SaimoneiiasGearPlus.MODID, "item/example_charm"));
         exampleNecklace = map.get(new ResourceLocation(SaimoneiiasGearPlus.MODID, "item/example_necklace"));
         mitoSingleSword = map.get(new ResourceLocation(SaimoneiiasGearPlus.MODID, "item/mito_single_sword"));
+        mitoSingleSwordBlade = map.get(new ResourceLocation(SaimoneiiasGearPlus.MODID, "equip/mito_single_sword_blade"));
+        mitoSingleSwordSheath = map.get(new ResourceLocation(SaimoneiiasGearPlus.MODID, "equip/mito_single_sword_sheath"));
     }
 
     public void onModelRegister(ResourceManager rm, Consumer<ResourceLocation> consumer) {
@@ -36,6 +41,8 @@ public class MiscellaneousModels {
         consumer.accept(new ResourceLocation(SaimoneiiasGearPlus.MODID, "item/example_charm"));
         consumer.accept(new ResourceLocation(SaimoneiiasGearPlus.MODID, "item/example_necklace"));
         consumer.accept(new ResourceLocation(SaimoneiiasGearPlus.MODID, "item/mito_single_sword"));
+        consumer.accept(new ResourceLocation(SaimoneiiasGearPlus.MODID, "equip/mito_single_sword_blade"));
+        consumer.accept(new ResourceLocation(SaimoneiiasGearPlus.MODID, "equip/mito_single_sword_sheath"));
 
         if (!registeredModels) {
             registeredModels = true;

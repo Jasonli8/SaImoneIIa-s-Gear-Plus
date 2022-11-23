@@ -14,6 +14,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
+import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeData;
 import saimoneiia.mods.saimoneiiasgearplus.client.core.handler.MiscellaneousModels;
 import saimoneiia.mods.saimoneiiasgearplus.client.render.EquipmentRenderRegistry;
 import saimoneiia.mods.saimoneiiasgearplus.client.render.EquipmentRenderer;
@@ -32,16 +33,33 @@ public class MitoSingleSword extends BaseEquipment {
 
     public static class Renderer implements EquipmentRenderer {
         public void doRender(HumanoidModel<?> bipedModel, ItemStack stack, LivingEntity living, PoseStack ms, MultiBufferSource buffers, int light, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-            boolean armor = !living.getItemBySlot(EquipmentSlot.LEGS).isEmpty();
-            bipedModel.body.translateAndRotate(ms);
-            ms.scale(1.0F, -1.0F, -1.0F); // (keep ratio and sign same, bigger+/smaller-)
-            ms.mulPose(Vector3f.XP.rotationDegrees(50.0F));
-            ms.mulPose(Vector3f.YN.rotationDegrees(90.0F));
-            ms.translate(0.15F, -1.75F, armor ? -0.1 : -0.25F); // (left+/right- body widths from center), (down-/up+ from bodycenter), (back-/forward+ body widths from center)
-            BakedModel model = MiscellaneousModels.INSTANCE.mitoSingleSword;
             VertexConsumer buffer = buffers.getBuffer(Sheets.cutoutBlockSheet());
+
+            BakedModel sheathModel = MiscellaneousModels.INSTANCE.mitoSingleSwordSheath;
+            boolean armor = !living.getItemBySlot(EquipmentSlot.LEGS).isEmpty();
+            ms.pushPose();
+            bipedModel.body.translateAndRotate(ms);
+            ms.mulPose(Vector3f.XP.rotationDegrees(180.0F));
+            ms.mulPose(Vector3f.YN.rotationDegrees(90.0F));
+            ms.mulPose(Vector3f.ZN.rotationDegrees(50.0F));
+            ms.translate(0.1F, -1.8F, armor ? -0.2 : -0.25F);
             Minecraft.getInstance().getBlockRenderer().getModelRenderer()
-                    .renderModel(ms.last(), buffer, null, model, 1, 1, 1, light, OverlayTexture.NO_OVERLAY);
+                    .renderModel(ms.last(), buffer, null, sheathModel, 1, 1, 1, light, OverlayTexture.NO_OVERLAY);
+
+            BakedModel bladeModel = MiscellaneousModels.INSTANCE.mitoSingleSwordBlade;
+            if (ClientBattleModeData.get()) {
+                ms.popPose();
+                bipedModel.leftArm.translateAndRotate(ms);
+                ms.mulPose(Vector3f.YP.rotationDegrees(90.0F));
+                ms.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
+                ms.translate(0.05F, -1.75F, -0.4F);
+                Minecraft.getInstance().getBlockRenderer().getModelRenderer()
+                        .renderModel(ms.last(), buffer, null, bladeModel, 1, 1, 1, light, OverlayTexture.NO_OVERLAY);
+            } else {
+                Minecraft.getInstance().getBlockRenderer().getModelRenderer()
+                        .renderModel(ms.last(), buffer, null, bladeModel, 1, 1, 1, light, OverlayTexture.NO_OVERLAY);
+                ms.popPose();
+            }
         }
     }
 }
