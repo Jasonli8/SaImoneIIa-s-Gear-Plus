@@ -1,5 +1,6 @@
 package saimoneiia.mods.saimoneiiasgearplus.mixin;
 
+import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,6 +22,8 @@ import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeDat
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
+import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
+import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
 
 @Mixin(value = Player.class)
@@ -98,15 +101,36 @@ public class MixinPlayer {
     @Inject(at = @At(value = "HEAD"), method = "getItemBySlot", cancellable = true)
     public void saimoneiiasgearplus_getItemBySlot(EquipmentSlot p_36257_, CallbackInfoReturnable<ItemStack> cir) {
         if (ClientBattleModeData.get()) {
-            CuriosApi.getCuriosHelper().getCuriosHandler(Minecraft.getInstance().player).ifPresent(handler -> handler.getCurios().forEach((id, stacksHandler) -> {
-                IDynamicStackHandler stackHandler = stacksHandler.getStacks();
-                ItemStack stack = stackHandler.getStackInSlot(0);
-                if (!stack.isEmpty()) {
-                    cir.setReturnValue(stack);
-                } else {
-                    cir.setReturnValue(ItemStack.EMPTY);
-                }
-            }));
+            if (p_36257_ == EquipmentSlot.MAINHAND) {
+                CuriosApi.getCuriosHelper().getCuriosHandler(Minecraft.getInstance().player).ifPresent(handler -> {
+                    ICurioStacksHandler stacksHandler = handler.getCurios().get("weapon");
+                    IDynamicStackHandler stackHandler = stacksHandler.getStacks();
+                    ItemStack stack = stackHandler.getStackInSlot(0);
+                    if (!stack.isEmpty()) {
+                        cir.setReturnValue(stack);
+                    } else {
+                        cir.setReturnValue(ItemStack.EMPTY);
+                    }
+                    cir.cancel();
+                });
+            } else if (p_36257_ == EquipmentSlot.OFFHAND) {
+                cir.setReturnValue(ItemStack.EMPTY);
+                cir.cancel();
+            }
+        }
+    }
+
+    @Inject(at = @At(value = "HEAD"), method = "setItemSlot", cancellable = true)
+    public void saimoneiiasgearplus_setItemSlot(EquipmentSlot p_36161_, ItemStack p_36162_, CallbackInfo cir) {
+        if (ClientBattleModeData.get()) {
+            cir.cancel();
+        }
+    }
+
+    @Inject(at = @At(value = "HEAD"), method = "getHandSlots", cancellable = true)
+    public void saimoneiiasgearplus_getHandSlots(CallbackInfoReturnable<Iterable<ItemStack>> cir) {
+        if (ClientBattleModeData.get()) {
+            cir.setReturnValue(Lists.newArrayList(ItemStack.EMPTY, ItemStack.EMPTY));
             cir.cancel();
         }
     }

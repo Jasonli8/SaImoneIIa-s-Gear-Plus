@@ -36,15 +36,6 @@ public class ClientEvents {
         public static void onKeyInput(InputEvent.Key event) {
             if(KeyBinding.TOGGLE_BATTLE_MODE_KEY.consumeClick()) {
                 ClientBattleModeData.toggle();
-                ModPackets.sendToServer(new BattleModeC2SPacket(ClientBattleModeData.get()));
-
-                // debug
-                if (ClientBattleModeData.get()) {
-                    Minecraft.getInstance().player.sendSystemMessage(Component.literal("Activating Battle Mode!"));
-                } else {
-                    Minecraft.getInstance().player.sendSystemMessage(Component.literal("De-activating Battle Mode!"));
-                }
-
             }
         }
     }

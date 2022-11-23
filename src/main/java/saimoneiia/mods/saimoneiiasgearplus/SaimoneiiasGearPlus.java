@@ -1,9 +1,11 @@
 package saimoneiia.mods.saimoneiiasgearplus;
 
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -15,8 +17,10 @@ import saimoneiia.mods.saimoneiiasgearplus.client.memoryprogression.MemoryProgre
 import saimoneiia.mods.saimoneiiasgearplus.init.BlockInit;
 import saimoneiia.mods.saimoneiiasgearplus.init.ContainerInit;
 import saimoneiia.mods.saimoneiiasgearplus.init.ItemInit;
+import saimoneiia.mods.saimoneiiasgearplus.init.gear.BaseEquipment;
 import saimoneiia.mods.saimoneiiasgearplus.integration.CurioIntegration;
 import saimoneiia.mods.saimoneiiasgearplus.networking.ModPackets;
+import saimoneiia.mods.saimoneiiasgearplus.util.EquipmentHandler;
 
 @Mod(SaimoneiiasGearPlus.MODID)
 
@@ -26,13 +30,14 @@ public class SaimoneiiasGearPlus {
     public SaimoneiiasGearPlus() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        EquipmentHandler.init();
+
         // Initialize basic items
         ItemInit.ITEMS.register(bus);
         BlockInit.BLOCKS.register(bus);
         ContainerInit.CONTAINERS.register(bus);
 
         bus.addListener(this::commonSetup);
-        CurioIntegration.init();
 
         MinecraftForge.EVENT_BUS.register(this);
     }
@@ -46,9 +51,19 @@ public class SaimoneiiasGearPlus {
     };
 
     private void commonSetup(final FMLCommonSetupEvent event) {
+        IEventBus bus = MinecraftForge.EVENT_BUS;
+        bus.addGenericListener(ItemStack.class, this::attachItemCaps);
         event.enqueueWork(() -> {});
-
         ModPackets.register();
+    }
+
+    private void attachItemCaps(AttachCapabilitiesEvent<ItemStack> e) {
+        var stack = e.getObject();
+
+        if (stack.getItem() instanceof BaseEquipment
+                && EquipmentHandler.instance instanceof CurioIntegration ci) {
+            e.addCapability(new ResourceLocation(SaimoneiiasGearPlus.MODID, "curio"), ci.initCapability(stack));
+        }
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent

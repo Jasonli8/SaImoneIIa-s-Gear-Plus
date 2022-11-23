@@ -8,13 +8,16 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
+import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeData;
 import saimoneiia.mods.saimoneiiasgearplus.integration.CurioIntegration;
+import saimoneiia.mods.saimoneiiasgearplus.util.EquipmentHandler;
+import top.theillusivec4.curios.api.SlotContext;
 
 public class BaseEquipment extends Item {
 
     public BaseEquipment() {
         super(new Item.Properties().tab(SaimoneiiasGearPlus.TAB).stacksTo(1));
-        CurioIntegration.onInit(this);
+        EquipmentHandler.instance.onInit(this);
     }
 
     // override with acccessory effect function
@@ -22,6 +25,12 @@ public class BaseEquipment extends Item {
 
     public boolean canEquip(ItemStack stack, LivingEntity livingEntity) {
         return true;
+    }
+
+    public void onEquip(ItemStack stack, LivingEntity entity) {}
+
+    public void onUnequip(ItemStack stack, LivingEntity entity) {
+        ClientBattleModeData.refreshToggle();
     }
 
     public Multimap<Attribute, AttributeModifier> getEquippedAttributeModifiers(ItemStack stack) {
