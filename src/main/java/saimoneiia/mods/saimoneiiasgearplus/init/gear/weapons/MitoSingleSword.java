@@ -37,7 +37,7 @@ public class MitoSingleSword extends BaseEquipment {
             ms.scale(1.0F, -1.0F, -1.0F); // (keep ratio and sign same, bigger+/smaller-)
             ms.mulPose(Vector3f.XP.rotationDegrees(50.0F));
             ms.mulPose(Vector3f.YN.rotationDegrees(90.0F));
-            ms.translate(0.15F, -1.5F, armor ? -0.1 : -0.25F); // (left+/right- body widths from center), (down-/up+ from bodycenter), (back-/forward+ body widths from center)
+            ms.translate(0.15F, -1.75F, armor ? -0.1 : -0.25F); // (left+/right- body widths from center), (down-/up+ from bodycenter), (back-/forward+ body widths from center)
             BakedModel model = MiscellaneousModels.INSTANCE.mitoSingleSword;
             VertexConsumer buffer = buffers.getBuffer(Sheets.cutoutBlockSheet());
             Minecraft.getInstance().getBlockRenderer().getModelRenderer()
