@@ -18,10 +18,10 @@ public class BlockInit {
     ////////////////////////////////////////////////////////
 
     // list of blocks (and its item) to register
-    public static final RegistryObject<Block> EXAMPLE_BLOCK = register(
-            "example_block",
-            () -> new Block(BlockBehaviour.Properties.of(Material.DIRT)),
-            new Item.Properties().tab(SaimoneiiasGearPlus.TAB));
+//    public static final RegistryObject<Block> EXAMPLE_BLOCK = register(
+//            "example_block",
+//            () -> new Block(BlockBehaviour.Properties.of(Material.DIRT)),
+//            new Item.Properties().tab(SaimoneiiasGearPlus.TAB));
 
     public static final RegistryObject<Block> MEMORY_CORE = register(
             "memory_core",

@@ -4,9 +4,12 @@ import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.controller.BattleModeController;
+import saimoneiia.mods.saimoneiiasgearplus.init.gear.WeaponItem;
 import saimoneiia.mods.saimoneiiasgearplus.networking.ModPackets;
 import saimoneiia.mods.saimoneiiasgearplus.networking.packet.BattleModeC2SPacket;
 import top.theillusivec4.curios.api.CuriosApi;
@@ -42,11 +45,12 @@ public class ClientBattleModeData {
     private static void onToggle() {
         if (isBattleMode) {
             minecraft.player.sendSystemMessage(Component.literal("Activating Battle Mode!"));
-            minecraft.options.setCameraType(CameraType.THIRD_PERSON_BACK);
+//            minecraft.options.setCameraType(CameraType.THIRD_PERSON_BACK);
             minecraft.player.removeVehicle();
         } else {
             minecraft.player.sendSystemMessage(Component.literal("De-activating Battle Mode!"));
-            minecraft.options.setCameraType(CameraType.FIRST_PERSON);
+//            minecraft.options.setCameraType(CameraType.FIRST_PERSON);
+            BattleModeController.skillReset();
         }
     }
 }

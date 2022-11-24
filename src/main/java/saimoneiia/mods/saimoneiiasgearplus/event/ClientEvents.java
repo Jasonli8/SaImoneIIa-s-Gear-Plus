@@ -5,10 +5,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
 import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeData;
+import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.controller.BattleModeController;
 import saimoneiia.mods.saimoneiiasgearplus.util.handler.MiscellaneousModels;
 import saimoneiia.mods.saimoneiiasgearplus.client.keybindings.KeyBinding;
 
@@ -25,6 +27,7 @@ public class ClientEvents {
     public static void onModelBake(ModelEvent.BakingCompleted evt) {
         MiscellaneousModels.INSTANCE.onModelBake(evt.getModelBakery(), evt.getModels());
     }
+
     @Mod.EventBusSubscriber(modid=SaimoneiiasGearPlus.MODID, value=Dist.CLIENT)
     public static class ClientForgeEvents {
 
@@ -32,6 +35,13 @@ public class ClientEvents {
         public static void onKeyInput(InputEvent.Key event) {
             if(KeyBinding.TOGGLE_BATTLE_MODE_KEY.consumeClick()) {
                 ClientBattleModeData.toggle();
+            }
+        }
+
+        @SubscribeEvent
+        public static void preProcessKeyBindings(TickEvent.ClientTickEvent event) {
+            if (event.phase == TickEvent.Phase.START) {
+                BattleModeController.combatTick(event);
             }
         }
     }

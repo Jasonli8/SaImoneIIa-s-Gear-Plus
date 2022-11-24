@@ -10,6 +10,7 @@ import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
 import saimoneiia.mods.saimoneiiasgearplus.networking.packet.BattleModeC2SPacket;
 import saimoneiia.mods.saimoneiiasgearplus.networking.packet.BattleModeS2CPacket;
 import saimoneiia.mods.saimoneiiasgearplus.networking.packet.MemoryS2CPacket;
+import saimoneiia.mods.saimoneiiasgearplus.networking.packet.SkillCastC2SPacket;
 
 public class ModPackets {
     private static SimpleChannel INSTANCE;
@@ -44,6 +45,12 @@ public class ModPackets {
                 .decoder(BattleModeC2SPacket::new)
                 .encoder(BattleModeC2SPacket::toBytes)
                 .consumer(BattleModeC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(SkillCastC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(SkillCastC2SPacket::new)
+                .encoder(SkillCastC2SPacket::toBytes)
+                .consumer(SkillCastC2SPacket::handle)
                 .add();
     }
 

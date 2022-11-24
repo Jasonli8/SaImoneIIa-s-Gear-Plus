@@ -1,5 +1,12 @@
-recipe unlocking
-xp to level list
-mem prog hud
-memory core textures
-memory progression screen texture (as textures/gui/memoryprogressionscreen.png
+TimeLine---------------------------------------
+Equipment effects handler
+Stats
+Level gating
+Test enemy
+
+Optionals--------------------------------------
+Textures
+Animations
+Recipes
+Book Progression
+Book entries

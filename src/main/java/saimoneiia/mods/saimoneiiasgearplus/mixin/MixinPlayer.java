@@ -19,6 +19,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeData;
+import saimoneiia.mods.saimoneiiasgearplus.init.ItemInit;
+import saimoneiia.mods.saimoneiiasgearplus.init.custom.SkillMasterItem;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
@@ -101,23 +103,10 @@ public class MixinPlayer {
     @Inject(at = @At(value = "HEAD"), method = "getItemBySlot", cancellable = true)
     public void saimoneiiasgearplus_getItemBySlot(EquipmentSlot p_36257_, CallbackInfoReturnable<ItemStack> cir) {
         if (ClientBattleModeData.get()) {
-//            if (p_36257_ == EquipmentSlot.MAINHAND) {
-//                CuriosApi.getCuriosHelper().getCuriosHandler(Minecraft.getInstance().player).ifPresent(handler -> {
-//                    ICurioStacksHandler stacksHandler = handler.getCurios().get("weapon");
-//                    IDynamicStackHandler stackHandler = stacksHandler.getStacks();
-//                    ItemStack stack = stackHandler.getStackInSlot(0);
-//                    if (!stack.isEmpty()) {
-//                        cir.setReturnValue(stack);
-//                    } else {
-//                        cir.setReturnValue(ItemStack.EMPTY);
-//                    }
-//                    cir.cancel();
-//                });
-//            } else if (p_36257_ == EquipmentSlot.OFFHAND) {
-//                cir.setReturnValue(ItemStack.EMPTY);
-//                cir.cancel();
-//            }
-            if (p_36257_ == EquipmentSlot.MAINHAND || p_36257_ == EquipmentSlot.OFFHAND) {
+            if (p_36257_ == EquipmentSlot.MAINHAND) {
+                cir.setReturnValue(ItemStack.EMPTY);
+                cir.cancel();
+            } else if (p_36257_ == EquipmentSlot.OFFHAND) {
                 cir.setReturnValue(ItemStack.EMPTY);
                 cir.cancel();
             }
