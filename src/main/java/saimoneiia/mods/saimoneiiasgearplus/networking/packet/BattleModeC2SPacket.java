@@ -3,7 +3,6 @@ package saimoneiia.mods.saimoneiiasgearplus.networking.packet;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
-import saimoneiia.mods.saimoneiiasgearplus.networking.ModPackets;
 import saimoneiia.mods.saimoneiiasgearplus.player.battlemode.BattleModeProvider;
 
 import java.util.function.Supplier;

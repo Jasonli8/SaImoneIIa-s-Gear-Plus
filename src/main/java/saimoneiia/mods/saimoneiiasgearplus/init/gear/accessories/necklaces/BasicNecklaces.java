@@ -27,6 +27,7 @@ public class BasicNecklaces {
         @Override
         public void itemTick(ItemStack stack, LivingEntity livingEntity) {
             // add some functionality here
+            System.out.println("example necklace tick");
         }
 
         public static class Renderer implements EquipmentRenderer {

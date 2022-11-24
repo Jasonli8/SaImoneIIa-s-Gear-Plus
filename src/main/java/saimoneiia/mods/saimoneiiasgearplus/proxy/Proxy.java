@@ -1,6 +1,5 @@
 package saimoneiia.mods.saimoneiiasgearplus.proxy;
 
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.loading.FMLLoader;
 

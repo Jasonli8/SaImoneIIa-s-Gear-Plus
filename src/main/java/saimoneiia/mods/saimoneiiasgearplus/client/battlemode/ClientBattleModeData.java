@@ -1,15 +1,11 @@
 package saimoneiia.mods.saimoneiiasgearplus.client.battlemode;
 
-import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.controller.BattleModeController;
-import saimoneiia.mods.saimoneiiasgearplus.init.gear.WeaponItem;
 import saimoneiia.mods.saimoneiiasgearplus.networking.ModPackets;
 import saimoneiia.mods.saimoneiiasgearplus.networking.packet.BattleModeC2SPacket;
 import top.theillusivec4.curios.api.CuriosApi;

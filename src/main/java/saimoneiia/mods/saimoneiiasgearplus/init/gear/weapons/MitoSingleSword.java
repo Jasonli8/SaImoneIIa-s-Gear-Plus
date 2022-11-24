@@ -15,12 +15,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeData;
 import saimoneiia.mods.saimoneiiasgearplus.init.gear.WeaponItem;
-import saimoneiia.mods.saimoneiiasgearplus.networking.ModPackets;
-import saimoneiia.mods.saimoneiiasgearplus.networking.packet.SkillCastC2SPacket;
 import saimoneiia.mods.saimoneiiasgearplus.util.handler.MiscellaneousModels;
 import saimoneiia.mods.saimoneiiasgearplus.client.render.EquipmentRenderRegistry;
 import saimoneiia.mods.saimoneiiasgearplus.client.render.EquipmentRenderer;
-import saimoneiia.mods.saimoneiiasgearplus.init.gear.BaseEquipment;
 import saimoneiia.mods.saimoneiiasgearplus.proxy.Proxy;
 
 public class MitoSingleSword extends WeaponItem {

@@ -1,6 +1,5 @@
 package saimoneiia.mods.saimoneiiasgearplus.init;
 
-import net.minecraft.world.Containers;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

@@ -7,7 +7,6 @@ import net.minecraftforge.registries.RegistryObject;
 import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
 import saimoneiia.mods.saimoneiiasgearplus.init.custom.MemoryNoteItem;
 import saimoneiia.mods.saimoneiiasgearplus.init.custom.PlayerCardItem;
-import saimoneiia.mods.saimoneiiasgearplus.init.custom.SkillMasterItem;
 import saimoneiia.mods.saimoneiiasgearplus.init.gear.accessories.belts.BasicBelts;
 import saimoneiia.mods.saimoneiiasgearplus.init.gear.accessories.charms.BasicCharms;
 import saimoneiia.mods.saimoneiiasgearplus.init.gear.accessories.hands.BasicHands;
@@ -23,12 +22,10 @@ public class ItemInit {
 
     // list of items to register
     // 1. examples
-//    public static final RegistryObject<Item> EXAMPLE_ITEM = ITEMS.register("example_item", () -> new Item(new Item.Properties().tab(SaimoneiiasGearPlus.TAB)));
 
     // 2. usable items
     public static final RegistryObject<Item> MEMORY_NOTE = ITEMS.register("memory_note", () -> new MemoryNoteItem(new Item.Properties().tab(SaimoneiiasGearPlus.TAB).stacksTo(16)));
     public static final RegistryObject<Item> PLAYER_CARD = ITEMS.register("player_card", () -> new PlayerCardItem(new Item.Properties().tab(SaimoneiiasGearPlus.TAB).stacksTo(1)));
-    public static final RegistryObject<Item> SKILL_MASTER = ITEMS.register("skill_master", SkillMasterItem::new);
     public static final RegistryObject<Item> PURE_EXPERIENCE = ITEMS.register("pure_experience", () -> new Item(new Item.Properties().tab(SaimoneiiasGearPlus.TAB).stacksTo(16)));
 
     // 3. crafting items

@@ -1,8 +1,8 @@
 TimeLine---------------------------------------
-Equipment effects handler
 Stats
 Level gating
 Test enemy
+Skill casting expires once stale
 
 Optionals--------------------------------------
 Textures

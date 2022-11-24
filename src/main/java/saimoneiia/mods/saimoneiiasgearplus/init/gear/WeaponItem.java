@@ -1,8 +1,6 @@
 package saimoneiia.mods.saimoneiiasgearplus.init.gear;
 
 import net.minecraft.world.entity.player.Player;
-import saimoneiia.mods.saimoneiiasgearplus.networking.ModPackets;
-import saimoneiia.mods.saimoneiiasgearplus.networking.packet.SkillCastC2SPacket;
 
 public class WeaponItem extends BaseEquipment {
     protected int skillInputs = 3;

@@ -1,19 +1,15 @@
 package saimoneiia.mods.saimoneiiasgearplus;
 
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.jetbrains.annotations.NotNull;
-import saimoneiia.mods.saimoneiiasgearplus.client.memoryprogression.MemoryProgressionScreen;
 import saimoneiia.mods.saimoneiiasgearplus.init.BlockInit;
 import saimoneiia.mods.saimoneiiasgearplus.init.ContainerInit;
 import saimoneiia.mods.saimoneiiasgearplus.init.ItemInit;
@@ -63,15 +59,6 @@ public class SaimoneiiasGearPlus {
         if (stack.getItem() instanceof BaseEquipment
                 && EquipmentHandler.instance instanceof CurioIntegration ci) {
             e.addCapability(new ResourceLocation(SaimoneiiasGearPlus.MODID, "curio"), ci.initCapability(stack));
-        }
-    }
-
-    // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-    @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class ClientModEvents {
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event) {
-            MenuScreens.register(ContainerInit.MEMORY_PROGRESSION.get(), MemoryProgressionScreen::new);
         }
     }
 }
