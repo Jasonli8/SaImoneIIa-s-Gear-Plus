@@ -9,9 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
 import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeData;
-import saimoneiia.mods.saimoneiiasgearplus.integration.CurioIntegration;
-import saimoneiia.mods.saimoneiiasgearplus.util.EquipmentHandler;
-import top.theillusivec4.curios.api.SlotContext;
+import saimoneiia.mods.saimoneiiasgearplus.util.handler.EquipmentHandler;
 
 public class BaseEquipment extends Item {
 

@@ -1,8 +1,6 @@
 package saimoneiia.mods.saimoneiiasgearplus.event;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.ModelEvent;
@@ -11,10 +9,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
 import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeData;
-import saimoneiia.mods.saimoneiiasgearplus.client.core.handler.MiscellaneousModels;
+import saimoneiia.mods.saimoneiiasgearplus.util.handler.MiscellaneousModels;
 import saimoneiia.mods.saimoneiiasgearplus.client.keybindings.KeyBinding;
-import saimoneiia.mods.saimoneiiasgearplus.networking.ModPackets;
-import saimoneiia.mods.saimoneiiasgearplus.networking.packet.BattleModeC2SPacket;
 
 @Mod.EventBusSubscriber(modid = SaimoneiiasGearPlus.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientEvents {

@@ -1,4 +1,4 @@
-package saimoneiia.mods.saimoneiiasgearplus.util;
+package saimoneiia.mods.saimoneiiasgearplus.util.handler;
 
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;

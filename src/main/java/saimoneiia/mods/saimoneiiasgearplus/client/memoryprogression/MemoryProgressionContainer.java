@@ -8,6 +8,7 @@ import net.minecraft.world.inventory.MenuConstructor;
 import net.minecraft.world.item.ItemStack;
 import saimoneiia.mods.saimoneiiasgearplus.init.ContainerInit;
 import saimoneiia.mods.saimoneiiasgearplus.player.memoryprogression.MemoryProgressionProvider;
+import saimoneiia.mods.saimoneiiasgearplus.util.MemoryLevelScaling;
 
 public class MemoryProgressionContainer extends AbstractContainerMenu {
     private final Player player;
@@ -23,8 +24,8 @@ public class MemoryProgressionContainer extends AbstractContainerMenu {
         this.player = player;
         player.getCapability(MemoryProgressionProvider.PLAYER_MEM_PROG)
                 .ifPresent(memProg -> {
-                    this.addDataSlot(DataSlot.standalone()).set(memProg.getLevel());
-                    this.addDataSlot(DataSlot.standalone()).set(memProg.getProg());
+                    this.addDataSlot(DataSlot.standalone()).set(MemoryLevelScaling.getMemLevel(memProg.getMem()));
+                    this.addDataSlot(DataSlot.standalone()).set(MemoryLevelScaling.getMemLevelProg(memProg.getMem()));
                 });
     }
 

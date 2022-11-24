@@ -10,6 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import saimoneiia.mods.saimoneiiasgearplus.player.memoryprogression.MemoryProgression;
 import saimoneiia.mods.saimoneiiasgearplus.player.memoryprogression.MemoryProgressionProvider;
+import saimoneiia.mods.saimoneiiasgearplus.util.MemoryLevelScaling;
 
 import java.util.Collection;
 
@@ -68,6 +69,7 @@ public class MemorySetCommand {
                     memProg.setLevel(amount);
                 }
             });
+            MemoryProgression.syncPlayerMem(player);
         }
 
         source.sendSuccess(Component.literal(players.size() + " memory progressions changed."), true);
@@ -78,8 +80,9 @@ public class MemorySetCommand {
     private int reset(CommandSourceStack source, Collection<? extends ServerPlayer> players) throws CommandSyntaxException {
         for(ServerPlayer player : players) {
             player.getCapability(MemoryProgressionProvider.PLAYER_MEM_PROG).ifPresent(memProg -> {
-                memProg.setMem(MemoryProgression.minMemProg);
+                memProg.setMem(MemoryLevelScaling.MIN_MEM);
             });
+            MemoryProgression.syncPlayerMem(player);
         }
 
         source.sendSuccess(Component.literal(players.size() + " memory progressions resetted."), true);
@@ -96,6 +99,7 @@ public class MemorySetCommand {
                     memProg.addLevel(amount);
                 }
             });
+            MemoryProgression.syncPlayerMem(player);
         }
 
         source.sendSuccess(Component.literal(players.size() + " memory progressions changed."), true);

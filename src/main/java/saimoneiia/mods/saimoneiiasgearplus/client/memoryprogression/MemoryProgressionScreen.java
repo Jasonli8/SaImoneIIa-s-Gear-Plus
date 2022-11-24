@@ -11,6 +11,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
+import saimoneiia.mods.saimoneiiasgearplus.util.MemoryLevelScaling;
 
 @OnlyIn(Dist.CLIENT)
 public class MemoryProgressionScreen extends AbstractContainerScreen<MemoryProgressionContainer> {
@@ -66,9 +67,10 @@ public class MemoryProgressionScreen extends AbstractContainerScreen<MemoryProgr
     }
 
     protected void renderMemoryProgressionBar(PoseStack stack, int x, int y) {
-        int level = ClientMemoryProgressionData.getPlayerLevel();
-        int prog = ClientMemoryProgressionData.getPlayerProg();
-        int maxProg = ClientMemoryProgressionData.getPlayerRequiredProg();
+        int memProg = ClientMemoryProgressionData.get();
+        int level = MemoryLevelScaling.getMemLevel(memProg);
+        int prog = MemoryLevelScaling.getMemLevelProg(memProg);
+        int maxProg = MemoryLevelScaling.getRequiredMemProg(memProg);
 
         final int memory_fillable = 20;
         int memory_filled = (memory_fillable * prog) / maxProg;
@@ -84,7 +86,7 @@ public class MemoryProgressionScreen extends AbstractContainerScreen<MemoryProgr
             blit(stack, x + i, y, 0, 0, 2, 8, 1, 4);
         }
 
-        if (ClientMemoryProgressionData.isMax()) {
+        if (MemoryLevelScaling.isMaxLevel(memProg)) {
             this.font.draw(stack, Component.literal("Level " + level + " (MAX LEVEL)"), x + memory_fillable + 3, y, 0x404040);
         } else {
             this.font.draw(stack, Component.literal("Level " + level + " (" + prog + "/" + maxProg + ")"), x + memory_fillable + 3, y, 0x404040);

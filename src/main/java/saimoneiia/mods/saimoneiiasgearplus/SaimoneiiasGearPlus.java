@@ -20,7 +20,7 @@ import saimoneiia.mods.saimoneiiasgearplus.init.ItemInit;
 import saimoneiia.mods.saimoneiiasgearplus.init.gear.BaseEquipment;
 import saimoneiia.mods.saimoneiiasgearplus.integration.CurioIntegration;
 import saimoneiia.mods.saimoneiiasgearplus.networking.ModPackets;
-import saimoneiia.mods.saimoneiiasgearplus.util.EquipmentHandler;
+import saimoneiia.mods.saimoneiiasgearplus.util.handler.EquipmentHandler;
 
 @Mod(SaimoneiiasGearPlus.MODID)
 

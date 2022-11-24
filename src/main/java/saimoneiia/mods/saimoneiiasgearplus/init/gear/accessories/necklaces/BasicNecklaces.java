@@ -11,11 +11,10 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import saimoneiia.mods.saimoneiiasgearplus.client.core.handler.MiscellaneousModels;
+import saimoneiia.mods.saimoneiiasgearplus.util.handler.MiscellaneousModels;
 import saimoneiia.mods.saimoneiiasgearplus.client.render.EquipmentRenderRegistry;
 import saimoneiia.mods.saimoneiiasgearplus.client.render.EquipmentRenderer;
 import saimoneiia.mods.saimoneiiasgearplus.init.gear.BaseEquipment;
-import saimoneiia.mods.saimoneiiasgearplus.init.gear.accessories.charms.BasicCharms;
 import saimoneiia.mods.saimoneiiasgearplus.proxy.Proxy;
 
 public class BasicNecklaces {

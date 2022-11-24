@@ -24,7 +24,7 @@ public class MemoryNoteItem extends Item {
         BlockPos blockPos = context.getClickedPos();
         BlockState blockState = level.getBlockState(blockPos);
         if (blockState.is(BlockInit.MEMORY_CORE.get())) {
-            if (level instanceof ServerLevel) {
+            if (!level.isClientSide) {
                 player.getCapability(MemoryProgressionProvider.PLAYER_MEM_PROG).ifPresent(memProg -> {
                     if (memProg.canAdd()) {
                         context.getItemInHand().shrink(1);
