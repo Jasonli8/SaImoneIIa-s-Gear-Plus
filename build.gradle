@@ -107,6 +107,9 @@ repositories {
     maven {
         url 'https://maven.blamejared.com'
     }
+    maven {
+        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+    }
 }
 
 dependencies {
@@ -116,6 +119,7 @@ dependencies {
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.19.2-5.1.1.0:api")
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.19.2-77:api")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.19.2-77")
+    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.19:3.1.37')
 }
 
 jar {
