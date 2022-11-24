@@ -36,20 +36,20 @@ public class MitoSingleSword extends BaseEquipment {
             boolean armor = !living.getItemBySlot(EquipmentSlot.LEGS).isEmpty();
             ms.pushPose();
             bipedModel.body.translateAndRotate(ms);
-            ms.mulPose(Vector3f.XP.rotationDegrees(180.0F));
+//            ms.mulPose(Vector3f.XP.rotationDegrees(180.0F));
             ms.mulPose(Vector3f.YN.rotationDegrees(90.0F));
-            ms.mulPose(Vector3f.ZN.rotationDegrees(50.0F));
-            ms.translate(0.1F, -1.8F, armor ? -0.2 : -0.25F);
+            ms.mulPose(Vector3f.ZP.rotationDegrees(130.0F));
+            ms.translate(0.1F, -1.7F, armor ? -0.8 : -0.75F);
             Minecraft.getInstance().getBlockRenderer().getModelRenderer()
                     .renderModel(ms.last(), buffer, null, sheathModel, 1, 1, 1, light, OverlayTexture.NO_OVERLAY);
 
             BakedModel bladeModel = MiscellaneousModels.INSTANCE.mitoSingleSwordBlade;
             if (ClientBattleModeData.get()) {
                 ms.popPose();
-                bipedModel.leftArm.translateAndRotate(ms);
+                bipedModel.rightArm.translateAndRotate(ms);
                 ms.mulPose(Vector3f.YP.rotationDegrees(90.0F));
                 ms.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
-                ms.translate(0.05F, -1.75F, -0.4F);
+                ms.translate(0.05F, -1.75F, -0.5F);
                 Minecraft.getInstance().getBlockRenderer().getModelRenderer()
                         .renderModel(ms.last(), buffer, null, bladeModel, 1, 1, 1, light, OverlayTexture.NO_OVERLAY);
             } else {
