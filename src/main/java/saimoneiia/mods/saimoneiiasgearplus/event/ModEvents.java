@@ -15,6 +15,7 @@ import net.minecraftforge.server.command.ConfigCommand;
 import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
 import saimoneiia.mods.saimoneiiasgearplus.command.MemorySetCommand;
 import saimoneiia.mods.saimoneiiasgearplus.networking.ModPackets;
+import saimoneiia.mods.saimoneiiasgearplus.networking.packet.BattleModeResourcesS2CPacket;
 import saimoneiia.mods.saimoneiiasgearplus.networking.packet.BattleModeS2CPacket;
 import saimoneiia.mods.saimoneiiasgearplus.networking.packet.MemoryS2CPacket;
 import saimoneiia.mods.saimoneiiasgearplus.player.battlemode.BattleMode;
@@ -44,7 +45,7 @@ public class ModEvents {
                     ModPackets.sendToPlayer(new MemoryS2CPacket(memProg.getMem()), player);
                 });
                 player.getCapability(BattleModeProvider.PLAYER_BATTLE_MODE).ifPresent(battleMode -> {
-                    ModPackets.sendToPlayer(new BattleModeS2CPacket(battleMode.get()), player);
+                    battleMode.syncClient((ServerPlayer) player);
                 });
             }
         }

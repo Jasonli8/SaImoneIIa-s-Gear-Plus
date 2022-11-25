@@ -11,6 +11,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
+import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeData;
 import saimoneiia.mods.saimoneiiasgearplus.util.MemoryLevelScaling;
 
 @OnlyIn(Dist.CLIENT)
@@ -60,6 +61,7 @@ public class MemoryProgressionScreen extends AbstractContainerScreen<MemoryProgr
         int j = ((this.height - this.renderHeight) / 2) + 8;
         this.font.draw(stack, title, i, j, 0x404040);
         renderMemoryProgressionBar(stack, i, j + 22);
+        renderStats(stack, i, j + 37);
     }
 
     @Override
@@ -91,5 +93,21 @@ public class MemoryProgressionScreen extends AbstractContainerScreen<MemoryProgr
         } else {
             this.font.draw(stack, Component.literal("Level " + level + " (" + prog + "/" + maxProg + ")"), x + memory_fillable + 3, y, 0x404040);
         }
+    }
+
+    protected void renderStats(PoseStack stack, int x, int y) {
+        int manaMax = ClientBattleModeData.manaMax;
+        int manaRate = ClientBattleModeData.manaRate;
+        int manaDelay = ClientBattleModeData.manaDelay;
+        int energyMax = ClientBattleModeData.energyMax;
+        int energyRate = ClientBattleModeData.energyRate;
+        int energyDelay = ClientBattleModeData.energyDelay;
+
+        this.font.draw(stack, Component.literal("Max Mana: " + manaMax + "pts"), x, y, 0x404040);
+        this.font.draw(stack, Component.literal("Mana RR: " + manaRate + "pts/tick"), x, y + 10, 0x404040);
+        this.font.draw(stack, Component.literal("Mana RD: " + manaDelay + "ticks"), x, y + 20, 0x404040);
+        this.font.draw(stack, Component.literal("Max Energy: " + energyMax + "pts/tick"), x, y + 35, 0x404040);
+        this.font.draw(stack, Component.literal("Energy RR: " + energyRate + "pts/tick"), x, y + 45, 0x404040);
+        this.font.draw(stack, Component.literal("Energy RD: " + energyDelay + "ticks"), x, y + 55, 0x404040);
     }
 }

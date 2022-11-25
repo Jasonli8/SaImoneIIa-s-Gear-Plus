@@ -27,7 +27,7 @@ public class BattleModeController {
     private static boolean pressedB = false;
 
     public static void combatTick(TickEvent.ClientTickEvent event) {
-        if (ClientBattleModeData.get()) {
+        if (ClientBattleModeData.isBattleMode) {
             // get weilded weapon at start of battle
             if (!initiatedBattle) {
                 initiatedBattle = true;

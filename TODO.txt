@@ -3,6 +3,7 @@ Stats
 Level gating
 Test enemy
 Skill casting expires once stale
+Battlemode UI and skill input feedback
 
 Optionals--------------------------------------
 Textures

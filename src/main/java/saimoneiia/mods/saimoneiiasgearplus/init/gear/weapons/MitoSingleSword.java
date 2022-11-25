@@ -99,7 +99,7 @@ public class MitoSingleSword extends WeaponItem {
                     .renderModel(ms.last(), buffer, null, sheathModel, 1, 1, 1, light, OverlayTexture.NO_OVERLAY);
 
             BakedModel bladeModel = MiscellaneousModels.INSTANCE.modelMap.get("mito_single_sword_blade");
-            if (ClientBattleModeData.get()) {
+            if (ClientBattleModeData.isBattleMode) {
                 ms.popPose();
                 bipedModel.rightArm.translateAndRotate(ms);
                 ms.mulPose(Vector3f.YP.rotationDegrees(90.0F));

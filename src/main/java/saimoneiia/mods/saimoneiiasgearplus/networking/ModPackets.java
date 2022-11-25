@@ -7,10 +7,7 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
-import saimoneiia.mods.saimoneiiasgearplus.networking.packet.BattleModeC2SPacket;
-import saimoneiia.mods.saimoneiiasgearplus.networking.packet.BattleModeS2CPacket;
-import saimoneiia.mods.saimoneiiasgearplus.networking.packet.MemoryS2CPacket;
-import saimoneiia.mods.saimoneiiasgearplus.networking.packet.SkillCastC2SPacket;
+import saimoneiia.mods.saimoneiiasgearplus.networking.packet.*;
 
 public class ModPackets {
     private static SimpleChannel INSTANCE;
@@ -32,25 +29,31 @@ public class ModPackets {
         net.messageBuilder(MemoryS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(MemoryS2CPacket::new)
                 .encoder(MemoryS2CPacket::toBytes)
-                .consumer(MemoryS2CPacket::handle)
+                .consumerNetworkThread(MemoryS2CPacket::handle)
                 .add();
 
         net.messageBuilder(BattleModeS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(BattleModeS2CPacket::new)
                 .encoder(BattleModeS2CPacket::toBytes)
-                .consumer(BattleModeS2CPacket::handle)
+                .consumerNetworkThread(BattleModeS2CPacket::handle)
                 .add();
 
         net.messageBuilder(BattleModeC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(BattleModeC2SPacket::new)
                 .encoder(BattleModeC2SPacket::toBytes)
-                .consumer(BattleModeC2SPacket::handle)
+                .consumerNetworkThread(BattleModeC2SPacket::handle)
                 .add();
 
         net.messageBuilder(SkillCastC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(SkillCastC2SPacket::new)
                 .encoder(SkillCastC2SPacket::toBytes)
-                .consumer(SkillCastC2SPacket::handle)
+                .consumerNetworkThread(SkillCastC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(BattleModeResourcesS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(BattleModeResourcesS2CPacket::new)
+                .encoder(BattleModeResourcesS2CPacket::toBytes)
+                .consumerNetworkThread(BattleModeResourcesS2CPacket::handle)
                 .add();
     }
 

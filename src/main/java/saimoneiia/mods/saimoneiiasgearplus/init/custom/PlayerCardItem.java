@@ -14,7 +14,9 @@ import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 import saimoneiia.mods.saimoneiiasgearplus.client.memoryprogression.MemoryProgressionContainer;
 import saimoneiia.mods.saimoneiiasgearplus.networking.ModPackets;
+import saimoneiia.mods.saimoneiiasgearplus.networking.packet.BattleModeResourcesS2CPacket;
 import saimoneiia.mods.saimoneiiasgearplus.networking.packet.MemoryS2CPacket;
+import saimoneiia.mods.saimoneiiasgearplus.player.battlemode.BattleModeProvider;
 import saimoneiia.mods.saimoneiiasgearplus.player.memoryprogression.MemoryProgressionProvider;
 
 public class PlayerCardItem extends Item{
@@ -27,6 +29,9 @@ public class PlayerCardItem extends Item{
         if (!level.isClientSide() && hand == InteractionHand.MAIN_HAND) {
             player.getCapability(MemoryProgressionProvider.PLAYER_MEM_PROG).ifPresent(memProg -> {
                 ModPackets.sendToPlayer(new MemoryS2CPacket(memProg.getMem()), (ServerPlayer) player);
+            });
+            player.getCapability(BattleModeProvider.PLAYER_BATTLE_MODE).ifPresent(battleMode -> {
+                battleMode.syncClient((ServerPlayer) player);
             });
             MenuProvider container = new SimpleMenuProvider(MemoryProgressionContainer.getServerContainer(), Component.literal("Memory Field"));
             NetworkHooks.openScreen((ServerPlayer) player, container);

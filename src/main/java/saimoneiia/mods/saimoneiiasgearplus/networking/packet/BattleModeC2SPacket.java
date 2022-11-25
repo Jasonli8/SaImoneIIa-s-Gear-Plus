@@ -22,7 +22,7 @@ public class BattleModeC2SPacket {
             ServerPlayer player = context.getSender();
 
             player.getCapability(BattleModeProvider.PLAYER_BATTLE_MODE).ifPresent(battleMode -> {
-                battleMode.set(isBattleMode);
+                battleMode.setBattleMode(isBattleMode);
             });
 
         });

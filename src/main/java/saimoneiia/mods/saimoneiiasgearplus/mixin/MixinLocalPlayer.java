@@ -11,7 +11,7 @@ import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeDat
 public abstract class MixinLocalPlayer {
     @Inject(at = @At(value = "HEAD"), method = "drop", cancellable = true)
     private void saimoneiiasgearplus_drop(boolean p_108701_, CallbackInfoReturnable<Boolean> cir) {
-        if (ClientBattleModeData.get()) {
+        if (ClientBattleModeData.isBattleMode) {
             cir.setReturnValue(false);
             cir.cancel();
         }
