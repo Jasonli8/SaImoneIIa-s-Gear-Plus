@@ -7,7 +7,7 @@ import saimoneiia.mods.saimoneiiasgearplus.init.gear.BaseEquipment;
 public class BasicRings {
     public static class ExampleRing extends BaseEquipment {
         public ExampleRing() {
-            super();
+            super("example_ring");
         }
 
         @Override

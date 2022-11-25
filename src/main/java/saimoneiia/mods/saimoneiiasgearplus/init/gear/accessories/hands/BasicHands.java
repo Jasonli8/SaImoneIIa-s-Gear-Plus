@@ -7,7 +7,7 @@ import saimoneiia.mods.saimoneiiasgearplus.init.gear.BaseEquipment;
 public class BasicHands {
     public static class ExampleHand extends BaseEquipment {
         public ExampleHand() {
-            super();
+            super("example_hand");
         }
 
         @Override

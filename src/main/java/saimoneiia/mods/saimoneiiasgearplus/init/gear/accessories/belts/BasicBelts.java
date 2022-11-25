@@ -7,7 +7,7 @@ import saimoneiia.mods.saimoneiiasgearplus.init.gear.BaseEquipment;
 public class BasicBelts {
     public static class ExampleBelt extends BaseEquipment {
         public ExampleBelt() {
-            super();
+            super("example_belt");
         }
 
         @Override

@@ -3,7 +3,7 @@ package saimoneiia.mods.saimoneiiasgearplus.networking.packet;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
-import saimoneiia.mods.saimoneiiasgearplus.init.gear.WeaponItem;
+import saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.WeaponItem;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 

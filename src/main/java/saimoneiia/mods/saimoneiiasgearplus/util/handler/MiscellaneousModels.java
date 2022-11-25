@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -15,20 +16,18 @@ public class MiscellaneousModels {
 
     private MiscellaneousModels() {}
 
-    public BakedModel
-            exampleCharm,
-            exampleNecklace,
-            mitoSingleSword, mitoSingleSwordBlade, mitoSingleSwordSheath;
+    public Map<String, BakedModel> modelMap = new HashMap<>();
+
 
     public void onModelBake(ModelBakery loader, Map<ResourceLocation, BakedModel> map) {
         if (!registeredModels) {
             return;
         }
-        exampleCharm = map.get(new ResourceLocation(SaimoneiiasGearPlus.MODID, "item/example_charm"));
-        exampleNecklace = map.get(new ResourceLocation(SaimoneiiasGearPlus.MODID, "item/example_necklace"));
-        mitoSingleSword = map.get(new ResourceLocation(SaimoneiiasGearPlus.MODID, "item/mito_single_sword"));
-        mitoSingleSwordBlade = map.get(new ResourceLocation(SaimoneiiasGearPlus.MODID, "equip/mito_single_sword_blade"));
-        mitoSingleSwordSheath = map.get(new ResourceLocation(SaimoneiiasGearPlus.MODID, "equip/mito_single_sword_sheath"));
+        modelMap.put("example_charm", map.get(new ResourceLocation(SaimoneiiasGearPlus.MODID, "item/example_charm")));
+        modelMap.put("example_necklace", map.get(new ResourceLocation(SaimoneiiasGearPlus.MODID, "item/example_necklace")));
+        modelMap.put("mito_single_sword", map.get(new ResourceLocation(SaimoneiiasGearPlus.MODID, "item/mito_single_sword")));
+        modelMap.put("mito_single_sword_blade", map.get(new ResourceLocation(SaimoneiiasGearPlus.MODID, "equip/mito_single_sword_blade")));
+        modelMap.put("mito_single_sword_sheath", map.get(new ResourceLocation(SaimoneiiasGearPlus.MODID, "equip/mito_single_sword_sheath")));
     }
 
     public void onModelRegister(ResourceManager rm, Consumer<ResourceLocation> consumer) {

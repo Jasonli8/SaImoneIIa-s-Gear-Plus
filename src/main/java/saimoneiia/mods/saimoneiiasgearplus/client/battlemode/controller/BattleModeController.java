@@ -5,7 +5,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.TickEvent;
 import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeData;
-import saimoneiia.mods.saimoneiiasgearplus.init.gear.WeaponItem;
+import saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.WeaponItem;
 import saimoneiia.mods.saimoneiiasgearplus.networking.ModPackets;
 import saimoneiia.mods.saimoneiiasgearplus.networking.packet.SkillCastC2SPacket;
 import top.theillusivec4.curios.api.CuriosApi;

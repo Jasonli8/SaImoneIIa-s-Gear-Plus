@@ -20,26 +20,13 @@ import saimoneiia.mods.saimoneiiasgearplus.proxy.Proxy;
 public class BasicCharms {
     public static class ExampleCharm extends BaseEquipment {
         public ExampleCharm() {
-            super();
+            super("example_charm");
             Proxy.INSTANCE.runOnClient(() -> () -> EquipmentRenderRegistry.register(this, new Renderer()));
         }
 
         @Override
         public void itemTick(ItemStack stack, LivingEntity livingEntity) {
             // add some functionality here
-        }
-
-        public static class Renderer implements EquipmentRenderer {
-            public void doRender(HumanoidModel<?> bipedModel, ItemStack stack, LivingEntity living, PoseStack ms, MultiBufferSource buffers, int light, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-                boolean armor = !living.getItemBySlot(EquipmentSlot.CHEST).isEmpty();
-                bipedModel.body.translateAndRotate(ms);
-                ms.translate(-0.25, 0.5, armor ? 0.05 : 0.12);
-                ms.scale(0.5F, -0.5F, -0.5F);
-                BakedModel model = MiscellaneousModels.INSTANCE.exampleCharm;
-                VertexConsumer buffer = buffers.getBuffer(Sheets.cutoutBlockSheet());
-                Minecraft.getInstance().getBlockRenderer().getModelRenderer()
-                        .renderModel(ms.last(), buffer, null, model, 1, 1, 1, light, OverlayTexture.NO_OVERLAY);
-            }
         }
     }
 }

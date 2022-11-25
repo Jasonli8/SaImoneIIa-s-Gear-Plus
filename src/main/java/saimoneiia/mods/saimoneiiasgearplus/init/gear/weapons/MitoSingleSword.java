@@ -14,7 +14,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeData;
-import saimoneiia.mods.saimoneiiasgearplus.init.gear.WeaponItem;
 import saimoneiia.mods.saimoneiiasgearplus.util.handler.MiscellaneousModels;
 import saimoneiia.mods.saimoneiiasgearplus.client.render.EquipmentRenderRegistry;
 import saimoneiia.mods.saimoneiiasgearplus.client.render.EquipmentRenderer;
@@ -22,7 +21,7 @@ import saimoneiia.mods.saimoneiiasgearplus.proxy.Proxy;
 
 public class MitoSingleSword extends WeaponItem {
     public MitoSingleSword() {
-        super(4);
+        super("mito_single_sword", 4);
         Proxy.INSTANCE.runOnClient(() -> () -> EquipmentRenderRegistry.register(this, new MitoSingleSword.Renderer()));
     }
 
@@ -82,11 +81,13 @@ public class MitoSingleSword extends WeaponItem {
     }
 
 
-    public static class Renderer implements EquipmentRenderer {
+
+    public class Renderer implements EquipmentRenderer {
+        @Override
         public void doRender(HumanoidModel<?> bipedModel, ItemStack stack, LivingEntity living, PoseStack ms, MultiBufferSource buffers, int light, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
             VertexConsumer buffer = buffers.getBuffer(Sheets.cutoutBlockSheet());
 
-            BakedModel sheathModel = MiscellaneousModels.INSTANCE.mitoSingleSwordSheath;
+            BakedModel sheathModel = MiscellaneousModels.INSTANCE.modelMap.get("mito_single_sword_sheath");
             boolean armor = !living.getItemBySlot(EquipmentSlot.LEGS).isEmpty();
             ms.pushPose();
             bipedModel.body.translateAndRotate(ms);
@@ -97,7 +98,7 @@ public class MitoSingleSword extends WeaponItem {
             Minecraft.getInstance().getBlockRenderer().getModelRenderer()
                     .renderModel(ms.last(), buffer, null, sheathModel, 1, 1, 1, light, OverlayTexture.NO_OVERLAY);
 
-            BakedModel bladeModel = MiscellaneousModels.INSTANCE.mitoSingleSwordBlade;
+            BakedModel bladeModel = MiscellaneousModels.INSTANCE.modelMap.get("mito_single_sword_blade");
             if (ClientBattleModeData.get()) {
                 ms.popPose();
                 bipedModel.rightArm.translateAndRotate(ms);

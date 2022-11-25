@@ -1,11 +1,13 @@
-package saimoneiia.mods.saimoneiiasgearplus.init.gear;
+package saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons;
 
 import net.minecraft.world.entity.player.Player;
+import saimoneiia.mods.saimoneiiasgearplus.init.gear.BaseEquipment;
 
 public class WeaponItem extends BaseEquipment {
     protected int skillInputs = 3;
 
-    public WeaponItem(int skillInputs) {
+    public WeaponItem(String name, int skillInputs) {
+        super(name);
         this.skillInputs = skillInputs;
     }
 
