@@ -17,6 +17,7 @@ import saimoneiia.mods.saimoneiiasgearplus.init.gear.BaseEquipment;
 import saimoneiia.mods.saimoneiiasgearplus.integration.CurioIntegration;
 import saimoneiia.mods.saimoneiiasgearplus.networking.ModPackets;
 import saimoneiia.mods.saimoneiiasgearplus.util.handler.EquipmentHandler;
+import software.bernie.geckolib3.GeckoLib;
 
 @Mod(SaimoneiiasGearPlus.MODID)
 
@@ -24,6 +25,8 @@ public class SaimoneiiasGearPlus {
     public static final String MODID = "saimoneiiasgearplus";
 
     public SaimoneiiasGearPlus() {
+        GeckoLib.initialize();
+
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
         EquipmentHandler.init();

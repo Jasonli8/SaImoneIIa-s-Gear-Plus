@@ -5,7 +5,7 @@ import net.minecraft.world.item.ItemStack;
 import saimoneiia.mods.saimoneiiasgearplus.init.gear.BaseEquipment;
 
 public class BasicRings {
-    public static class ExampleRing extends BaseEquipment {
+    public static class ExampleRing extends RingItem {
         public ExampleRing() {
             super("example_ring");
         }

@@ -5,7 +5,7 @@ import net.minecraft.world.item.ItemStack;
 import saimoneiia.mods.saimoneiiasgearplus.init.gear.BaseEquipment;
 
 public class BasicHands {
-    public static class ExampleHand extends BaseEquipment {
+    public static class ExampleHand extends HandItem {
         public ExampleHand() {
             super("example_hand");
         }

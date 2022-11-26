@@ -5,7 +5,7 @@ import net.minecraft.world.item.ItemStack;
 import saimoneiia.mods.saimoneiiasgearplus.init.gear.BaseEquipment;
 
 public class BasicBelts {
-    public static class ExampleBelt extends BaseEquipment {
+    public static class ExampleBelt extends BeltItem {
         public ExampleBelt() {
             super("example_belt");
         }

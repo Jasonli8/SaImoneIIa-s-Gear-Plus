@@ -31,4 +31,6 @@ public class WeaponItem extends BaseEquipment {
             default -> System.out.println("Shouldn't get here when casting skills");
         }
     }
+
+    // each weapon should manually override render function
 }

@@ -4,6 +4,7 @@ Level gating
 Test enemy
 Skill casting expires once stale
 Battlemode UI and skill input feedback
+DIsable battlemode on death
 
 Optionals--------------------------------------
 Textures
