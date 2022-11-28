@@ -1,50 +1,31 @@
 package saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.singlesword;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.Sheets;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeData;
-import saimoneiia.mods.saimoneiiasgearplus.client.render.EquipmentRenderRegistry;
-import saimoneiia.mods.saimoneiiasgearplus.client.render.EquipmentRenderer;
+import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
 import saimoneiia.mods.saimoneiiasgearplus.client.render.item.MitoSingleSwordRenderer;
-import saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.WeaponItem;
-import saimoneiia.mods.saimoneiiasgearplus.proxy.Proxy;
-import saimoneiia.mods.saimoneiiasgearplus.util.handler.ModifiedRenderableModels;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
+import saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.BaseWeaponTeir;
+import saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.MeleeWeaponItem;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.network.GeckoLibNetwork;
-import software.bernie.geckolib3.network.ISyncable;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.function.Consumer;
 
-public class MitoSingleSword extends SingleSwordItem {
+public class MitoSingleSword extends MeleeWeaponItem {
     public AnimationFactory factory = GeckoLibUtil.createFactory(this);
     public String controllerName = "controller";
 
     public static final int ANIM_OPEN = 0;
 
     public MitoSingleSword() {
-        super("mito_single_sword", 4);
-        Proxy.INSTANCE.runOnClient(() -> () -> EquipmentRenderRegistry.register(this, new MitoSingleSword.Renderer()));
+        super("mito_single_sword", 4, new BaseWeaponTeir(), 20, -1, (new Item.Properties()).tab(SaimoneiiasGearPlus.TAB).stacksTo(1).fireResistant());
+//        Proxy.INSTANCE.runOnClient(() -> () -> EquipmentRenderRegistry.register(this, new MitoSingleSword.Renderer()));
     }
 
     @Override

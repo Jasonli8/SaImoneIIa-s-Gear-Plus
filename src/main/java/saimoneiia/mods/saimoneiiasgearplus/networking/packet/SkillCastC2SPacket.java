@@ -3,7 +3,8 @@ package saimoneiia.mods.saimoneiiasgearplus.networking.packet;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
-import saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.WeaponItem;
+import saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.MeleeWeaponItem;
+import saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.RangedWeaponItem;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 
@@ -25,8 +26,13 @@ public class SkillCastC2SPacket {
             ServerPlayer player = context.getSender();
             CuriosApi.getCuriosHelper().getCuriosHandler(player).ifPresent(handler -> {
                 ICurioStacksHandler stacksHandler = handler.getCurios().get("weapon");
-                WeaponItem weapon = (WeaponItem) stacksHandler.getStacks().getStackInSlot(0).getItem();
-                weapon.castSkill(player, skillCode);
+                if (stacksHandler.getStacks().getStackInSlot(0).getItem() instanceof MeleeWeaponItem) {
+                    MeleeWeaponItem weapon = (MeleeWeaponItem) stacksHandler.getStacks().getStackInSlot(0).getItem();
+                    weapon.castSkill(player, skillCode);
+                } else {
+                    RangedWeaponItem weapon = (RangedWeaponItem) stacksHandler.getStacks().getStackInSlot(0).getItem();
+                    weapon.castSkill(player, skillCode);
+                }
             });
         });
         return true;

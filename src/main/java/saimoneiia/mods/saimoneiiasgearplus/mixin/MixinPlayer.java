@@ -1,6 +1,7 @@
 package saimoneiia.mods.saimoneiiasgearplus.mixin;
 
 import com.google.common.collect.Lists;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -17,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeData;
+import top.theillusivec4.curios.api.CuriosApi;
 
 @Mixin(value = Player.class)
 public class MixinPlayer {
@@ -95,6 +97,9 @@ public class MixinPlayer {
         if (ClientBattleModeData.isBattleMode) {
             if (p_36257_ == EquipmentSlot.MAINHAND) {
                 cir.setReturnValue(ItemStack.EMPTY);
+                CuriosApi.getCuriosHelper().getCuriosHandler(Minecraft.getInstance().player).ifPresent(handler -> {
+                    cir.setReturnValue(handler.getCurios().get("weapon").getStacks().getStackInSlot(0));
+                });
                 cir.cancel();
             } else if (p_36257_ == EquipmentSlot.OFFHAND) {
                 cir.setReturnValue(ItemStack.EMPTY);
@@ -113,7 +118,9 @@ public class MixinPlayer {
     @Inject(at = @At(value = "HEAD"), method = "getHandSlots", cancellable = true)
     public void saimoneiiasgearplus_getHandSlots(CallbackInfoReturnable<Iterable<ItemStack>> cir) {
         if (ClientBattleModeData.isBattleMode) {
-            cir.setReturnValue(Lists.newArrayList(ItemStack.EMPTY, ItemStack.EMPTY));
+            CuriosApi.getCuriosHelper().getCuriosHandler(Minecraft.getInstance().player).ifPresent(handler -> {
+                cir.setReturnValue(Lists.newArrayList(handler.getCurios().get("weapon").getStacks().getStackInSlot(0), ItemStack.EMPTY));
+            });
             cir.cancel();
         }
     }

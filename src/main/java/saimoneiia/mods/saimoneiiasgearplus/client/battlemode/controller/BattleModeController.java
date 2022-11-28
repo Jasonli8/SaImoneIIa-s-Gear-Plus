@@ -5,7 +5,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.TickEvent;
 import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeData;
-import saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.WeaponItem;
+import saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.MeleeWeaponItem;
+import saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.RangedWeaponItem;
 import saimoneiia.mods.saimoneiiasgearplus.networking.ModPackets;
 import saimoneiia.mods.saimoneiiasgearplus.networking.packet.SkillCastC2SPacket;
 import top.theillusivec4.curios.api.CuriosApi;
@@ -15,7 +16,9 @@ import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 public class BattleModeController {
     private static Minecraft minecraft = Minecraft.getInstance();
 
-    private static WeaponItem weapon;
+    private static MeleeWeaponItem weaponMelee;
+    private static RangedWeaponItem weaponRanged;
+    private static boolean isMelee = false;
 
     private static boolean initiatedBattle = false;
 
@@ -33,7 +36,13 @@ public class BattleModeController {
                 initiatedBattle = true;
                 CuriosApi.getCuriosHelper().getCuriosHandler(Minecraft.getInstance().player).ifPresent(handler -> {
                     ICurioStacksHandler stacksHandler = handler.getCurios().get("weapon");
-                    weapon = (WeaponItem) stacksHandler.getStacks().getStackInSlot(0).getItem();
+                    if (stacksHandler.getStacks().getStackInSlot(0).getItem() instanceof MeleeWeaponItem) {
+                        weaponMelee = (MeleeWeaponItem) stacksHandler.getStacks().getStackInSlot(0).getItem();
+                        isMelee = true;
+                    } else {
+                        weaponRanged = (RangedWeaponItem) stacksHandler.getStacks().getStackInSlot(0).getItem();
+                        isMelee = false;
+                    }
                 });
             }
 
@@ -80,10 +89,19 @@ public class BattleModeController {
     }
 
     private static void onSkillInput() {
-        if (skillInput == weapon.getRequiredSkillInputs()) {
-            ModPackets.sendToServer(new SkillCastC2SPacket(skillCode));
-            weapon.castSkill(minecraft.player, skillCode);
-            skillReset();
+        if (isMelee) {
+            if (skillInput == weaponMelee.getRequiredSkillInputs()) {
+                ModPackets.sendToServer(new SkillCastC2SPacket(skillCode));
+                weaponMelee.castSkill(minecraft.player, skillCode);
+                skillReset();
+            }
+        } else {
+            if (skillInput == weaponRanged.getRequiredSkillInputs()) {
+                ModPackets.sendToServer(new SkillCastC2SPacket(skillCode));
+                weaponRanged.castSkill(minecraft.player, skillCode);
+                skillReset();
+            }
         }
+
     }
 }
