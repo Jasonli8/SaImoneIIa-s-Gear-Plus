@@ -53,7 +53,6 @@ public class ClientBattleModeData {
         } else {
             minecraft.player.sendSystemMessage(Component.literal("De-activating Battle Mode!"));
 //            minecraft.options.setCameraType(CameraType.FIRST_PERSON);
-            BattleModeController.skillReset();
         }
     }
 

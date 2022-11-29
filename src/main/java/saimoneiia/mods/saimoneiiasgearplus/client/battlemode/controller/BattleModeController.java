@@ -1,10 +1,15 @@
 package saimoneiia.mods.saimoneiiasgearplus.client.battlemode.controller;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.sounds.MinecartSoundInstance;
+import net.minecraft.client.resources.sounds.Sound;
+import net.minecraft.client.resources.sounds.SoundInstance;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.TickEvent;
 import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeData;
+import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.SkillInputOverlay;
 import saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.MeleeWeaponItem;
 import saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.RangedWeaponItem;
 import saimoneiia.mods.saimoneiiasgearplus.networking.ModPackets;
@@ -22,18 +27,28 @@ public class BattleModeController {
 
     private static boolean initiatedBattle = false;
 
-    private static int skillCode = 0;
-    private static int skillInput = 0;
+    public static int skillCode = 0;
+    public static int skillInput = 0;
 
 
     private static boolean pressedA = false;
     private static boolean pressedB = false;
 
+    public static int castCooldown = 0;
+    public static int ticksSinceLastInput = 0;
+    public static boolean isSkillCasted = false;
+
     public static void combatTick(TickEvent.ClientTickEvent event) {
+        if (castCooldown > 0) {
+            castCooldown--;
+        } else {
+            isSkillCasted = false;
+        }
         if (ClientBattleModeData.isBattleMode) {
             // get weilded weapon at start of battle
             if (!initiatedBattle) {
                 initiatedBattle = true;
+                skillReset(20, false);
                 CuriosApi.getCuriosHelper().getCuriosHandler(Minecraft.getInstance().player).ifPresent(handler -> {
                     ICurioStacksHandler stacksHandler = handler.getCurios().get("weapon");
                     if (stacksHandler.getStacks().getStackInSlot(0).getItem() instanceof MeleeWeaponItem) {
@@ -46,31 +61,46 @@ public class BattleModeController {
                 });
             }
 
+            if (castCooldown > 0) castCooldown--;
+            if (skillInput > 0) ticksSinceLastInput++;
+
+            if (ticksSinceLastInput == 60) {
+                skillReset(0, false);
+                ticksSinceLastInput = 0;
+            }
+
             // handle skill button clicks (1 click per hold on down)
-            if (!pressedA && minecraft.options.keyAttack.isDown()) {
-                pressA();
-            } else if (!minecraft.options.keyAttack.isDown()) {
-                pressedA = false;
+            if (castCooldown <= 0) {
+                if (!pressedA && minecraft.options.keyAttack.isDown()) {
+                    pressA();
+                } else if (!minecraft.options.keyAttack.isDown()) {
+                    pressedA = false;
+                }
+
+                if (!pressedB && minecraft.options.keyUse.isDown()) {
+                    pressB();
+                } else if (!minecraft.options.keyUse.isDown()) {
+                    pressedB = false;
+                }
             }
-            if (!pressedB && minecraft.options.keyUse.isDown()) {
-                pressB();
-            } else if (!minecraft.options.keyUse.isDown()) {
-                pressedB = false;
-            }
-            onSkillInput();
         } else {
             initiatedBattle = false;
+            SkillInputOverlay.setCirclesToRender();
+            skillReset(0, false);
         }
-
     }
 
-    public static void skillReset() {
+    public static void skillReset(int cooldown, boolean wasCastSkill) {
+        castCooldown = cooldown;
+        isSkillCasted = wasCastSkill;
         skillCode = 0;
         skillInput = 0;
+
     }
 
     private static void pressA() {
         pressedA = true;
+        ticksSinceLastInput = 0;
         skillCode *= 2;
         if (skillCode != 0) {
             skillInput++;
@@ -78,30 +108,39 @@ public class BattleModeController {
         }
         System.out.println(skillCode);
         System.out.println(skillInput);
+        onSkillInput();
     }
 
     private static void pressB() {
         pressedB = true;
+        ticksSinceLastInput = 0;
         skillCode = 2 * skillCode + 1;
         skillInput++;
         System.out.println(skillCode);
         System.out.println(skillInput);
+        onSkillInput();
     }
 
+
     private static void onSkillInput() {
+            if (skillInput > 0) minecraft.player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP);
+            SkillInputOverlay.setCirclesToRender();
+            attemptSkillCast();
+    }
+
+    private static void attemptSkillCast() {
         if (isMelee) {
             if (skillInput == weaponMelee.getRequiredSkillInputs()) {
                 ModPackets.sendToServer(new SkillCastC2SPacket(skillCode));
                 weaponMelee.castSkill(minecraft.player, skillCode);
-                skillReset();
+                skillReset(10, true);
             }
         } else {
             if (skillInput == weaponRanged.getRequiredSkillInputs()) {
                 ModPackets.sendToServer(new SkillCastC2SPacket(skillCode));
                 weaponRanged.castSkill(minecraft.player, skillCode);
-                skillReset();
+                skillReset(10, true);
             }
         }
-
     }
 }

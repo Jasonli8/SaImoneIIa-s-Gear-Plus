@@ -18,6 +18,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.ModelEvent;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.event.TickEvent;
@@ -29,6 +30,7 @@ import org.jetbrains.annotations.Nullable;
 import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
 import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeData;
 import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.controller.BattleModeController;
+import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.SkillInputOverlay;
 import saimoneiia.mods.saimoneiiasgearplus.client.memoryprogression.MemoryProgressionScreen;
 import saimoneiia.mods.saimoneiiasgearplus.init.ContainerInit;
 import saimoneiia.mods.saimoneiiasgearplus.util.handler.ModifiedRenderableModels;
@@ -163,6 +165,11 @@ public class ClientEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             MenuScreens.register(ContainerInit.MEMORY_PROGRESSION.get(), MemoryProgressionScreen::new);
+        }
+
+        @SubscribeEvent
+        public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
+            event.registerAboveAll("skill", SkillInputOverlay.HUD_SKILL_CIRCLES);
         }
     }
 }
