@@ -21,7 +21,7 @@ public class SkillInputOverlay {
             new ResourceLocation(SaimoneiiasGearPlus.MODID, "textures/gui/skillinput4a.png"),
             new ResourceLocation(SaimoneiiasGearPlus.MODID, "textures/gui/skillinput4b.png"),
     };
-    private static float overlayAlpha = 0.3F;
+    private static float overlayAlpha = 0.2F;
     public static final IGuiOverlay HUD_SKILL_CIRCLES = (gui, poseStack, partialTick, screenWidth, screenHeight) -> {
         int x = screenWidth/2;
         int y = screenHeight/2;
@@ -29,15 +29,15 @@ public class SkillInputOverlay {
         Stack<Integer> circleToRenderClone = (Stack<Integer>) circleToRender.clone();
 
         if (BattleModeController.isSkillCasted) {
-            if (BattleModeController.ticksSinceLastInput < 10) {
+            if (BattleModeController.ticksSinceLastSkillInput < 10) {
                 overlayAlpha = Math.min(overlayAlpha + 0.1F, 1.0F);
-            } else if (BattleModeController.ticksSinceLastInput > 20) {
-                overlayAlpha = Math.max(overlayAlpha - 0.05F, 0F);
+            } else if (BattleModeController.ticksSinceLastSkillInput > 15) {
+                overlayAlpha = Math.max(overlayAlpha - 0.1F, 0F);
             }
         } else if (BattleModeController.skillInput == 0 && !circleToRender.isEmpty()) {
             overlayAlpha = Math.max(overlayAlpha - 0.01F, 0F);
         } else {
-            overlayAlpha = 0.3F;
+            overlayAlpha = 0.2F;
         }
 
         if (overlayAlpha == 0F) circleToRender.clear();

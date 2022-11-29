@@ -2,6 +2,7 @@ package saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -12,6 +13,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
 import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeData;
@@ -120,6 +122,18 @@ public class MeleeWeaponItem extends SwordItem implements IAnimatable, ISyncable
 
     // override with acccessory effect function
     public void itemTick(ItemStack stack, LivingEntity livingEntity) {}
+
+    public void dodge(Player player, Vec3 directionVec) {
+        float moveAmount = 2F;
+        Vec3 moveVec = directionVec.normalize().scale(moveAmount);
+        player.setDeltaMovement(moveVec);
+    }
+
+    public void powerJump(Player player) {
+        float jumpHeight = 1F;
+        Vec3 moveVec = Vec3.ZERO.add(0,1,0).normalize().scale(jumpHeight).add(player.getDeltaMovement());
+        player.setDeltaMovement(moveVec);
+    }
 
     public boolean canEquip(ItemStack stack, LivingEntity livingEntity) {
         return true;

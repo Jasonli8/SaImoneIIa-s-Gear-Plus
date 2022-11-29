@@ -10,6 +10,7 @@ import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeData;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -116,6 +117,20 @@ public class RangedWeaponItem extends BowItem implements IAnimatable, ISyncable 
 
     // override with acccessory effect function
     public void itemTick(ItemStack stack, LivingEntity livingEntity) {}
+
+    public void dodge(Player player, Vec3 directionVec) {
+        System.out.println("dodging");
+        float moveAmount = 2F;
+        Vec3 movementVec = player.getLookAngle().multiply(1,0,1);
+        Vec3 moveVec = player.getDeltaMovement().multiply(directionVec).normalize().scale(moveAmount).add(player.getDeltaMovement());
+        player.setDeltaMovement(moveVec);
+    }
+
+    public void powerJump(Player player) {
+        float jumpHeight = 2F;
+        Vec3 moveVec = player.getDeltaMovement().multiply(0F, 1F, 0F).normalize().scale(jumpHeight).add(player.getDeltaMovement());
+        player.setDeltaMovement(moveVec);
+    }
 
     public boolean canEquip(ItemStack stack, LivingEntity livingEntity) {
         return true;

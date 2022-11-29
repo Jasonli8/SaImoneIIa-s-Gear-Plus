@@ -22,7 +22,6 @@ public class SkillCastC2SPacket {
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
-            // TODO: skill casting on server side
             ServerPlayer player = context.getSender();
             CuriosApi.getCuriosHelper().getCuriosHandler(player).ifPresent(handler -> {
                 ICurioStacksHandler stacksHandler = handler.getCurios().get("weapon");

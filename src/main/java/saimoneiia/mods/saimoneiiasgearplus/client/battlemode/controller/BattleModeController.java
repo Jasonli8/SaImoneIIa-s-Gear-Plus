@@ -1,10 +1,13 @@
 package saimoneiia.mods.saimoneiiasgearplus.client.battlemode.controller;
 
+import com.mojang.math.Vector3d;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.MinecartSoundInstance;
 import net.minecraft.client.resources.sounds.Sound;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.TickEvent;
@@ -13,6 +16,7 @@ import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.SkillInputOverlay;
 import saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.MeleeWeaponItem;
 import saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.RangedWeaponItem;
 import saimoneiia.mods.saimoneiiasgearplus.networking.ModPackets;
+import saimoneiia.mods.saimoneiiasgearplus.networking.packet.MovementCastC2SPacket;
 import saimoneiia.mods.saimoneiiasgearplus.networking.packet.SkillCastC2SPacket;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
@@ -35,15 +39,21 @@ public class BattleModeController {
     private static boolean pressedB = false;
 
     public static int castCooldown = 0;
-    public static int ticksSinceLastInput = 0;
+    private static int dodgeCooldown = 0;
+    public static int ticksSinceLastSkillInput = 0;
     public static boolean isSkillCasted = false;
 
     public static void combatTick(TickEvent.ClientTickEvent event) {
+        // tick cooldowns and update states
         if (castCooldown > 0) {
             castCooldown--;
         } else {
             isSkillCasted = false;
         }
+        if (dodgeCooldown > 0) {
+            dodgeCooldown--;
+        }
+
         if (ClientBattleModeData.isBattleMode) {
             // get weilded weapon at start of battle
             if (!initiatedBattle) {
@@ -62,11 +72,11 @@ public class BattleModeController {
             }
 
             if (castCooldown > 0) castCooldown--;
-            if (skillInput > 0) ticksSinceLastInput++;
+            if (skillInput > 0) ticksSinceLastSkillInput++;
 
-            if (ticksSinceLastInput == 60) {
+            if (ticksSinceLastSkillInput == 60) {
                 skillReset(0, false);
-                ticksSinceLastInput = 0;
+                ticksSinceLastSkillInput = 0;
             }
 
             // handle skill button clicks (1 click per hold on down)
@@ -81,6 +91,16 @@ public class BattleModeController {
                     pressB();
                 } else if (!minecraft.options.keyUse.isDown()) {
                     pressedB = false;
+                }
+            }
+
+            // movement mechanics
+            if (minecraft.options.keyShift.isDown()) {
+                if (minecraft.options.keyUp.isDown() || minecraft.options.keyDown.isDown() || minecraft.options.keyLeft.isDown() || minecraft.options.keyRight.isDown()) {
+                    dodge();
+                }
+                if ( minecraft.options.keyJump.isDown()) {
+                    powerJump();
                 }
             }
         } else {
@@ -100,24 +120,19 @@ public class BattleModeController {
 
     private static void pressA() {
         pressedA = true;
-        ticksSinceLastInput = 0;
+        ticksSinceLastSkillInput = 0;
         skillCode *= 2;
         if (skillCode != 0) {
             skillInput++;
-
         }
-        System.out.println(skillCode);
-        System.out.println(skillInput);
         onSkillInput();
     }
 
     private static void pressB() {
         pressedB = true;
-        ticksSinceLastInput = 0;
+        ticksSinceLastSkillInput = 0;
         skillCode = 2 * skillCode + 1;
         skillInput++;
-        System.out.println(skillCode);
-        System.out.println(skillInput);
         onSkillInput();
     }
 
@@ -125,22 +140,59 @@ public class BattleModeController {
     private static void onSkillInput() {
             if (skillInput > 0) minecraft.player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP);
             SkillInputOverlay.setCirclesToRender();
+            if (skillInput > 0) {
+                minecraft.options.keyAttack.consumeClick();
+                minecraft.options.keyUse.consumeClick();
+            }
             attemptSkillCast();
     }
 
     private static void attemptSkillCast() {
         if (isMelee) {
             if (skillInput == weaponMelee.getRequiredSkillInputs()) {
-                ModPackets.sendToServer(new SkillCastC2SPacket(skillCode));
+//                ModPackets.sendToServer(new SkillCastC2SPacket(skillCode));
                 weaponMelee.castSkill(minecraft.player, skillCode);
                 skillReset(10, true);
             }
         } else {
             if (skillInput == weaponRanged.getRequiredSkillInputs()) {
-                ModPackets.sendToServer(new SkillCastC2SPacket(skillCode));
+//                ModPackets.sendToServer(new SkillCastC2SPacket(skillCode));
                 weaponRanged.castSkill(minecraft.player, skillCode);
                 skillReset(10, true);
             }
+        }
+    }
+
+    // DEFAULT MOVEMENTS
+    private static void dodge() {
+        if (minecraft.player.isOnGround() && dodgeCooldown <= 0) {
+            Vec3 directionVec = Vec3.ZERO;
+            Vec3 moveVec = minecraft.player.getLookAngle().multiply(1,0,1).normalize();
+            if (minecraft.options.keyLeft.isDown()) directionVec = directionVec.add(moveVec.yRot((float) Math.PI  / 2));
+            if (minecraft.options.keyRight.isDown()) directionVec = directionVec.add(moveVec.yRot((float) Math.PI  / -2));
+            if (minecraft.options.keyDown.isDown()) directionVec = directionVec.add(moveVec.yRot((float) Math.PI));
+            if (minecraft.options.keyUp.isDown()) directionVec = directionVec.add(moveVec);
+
+            if (isMelee) {
+                weaponMelee.dodge(minecraft.player, directionVec);
+            } else {
+                weaponRanged.dodge(minecraft.player, directionVec);
+            }
+//            ModPackets.sendToServer(new MovementCastC2SPacket("dodge", directionVec));
+            dodgeCooldown = 20;
+        }
+    }
+
+    private static void powerJump() {
+        if (minecraft.player.isOnGround()) {
+            if (isMelee) {
+                weaponMelee.powerJump(minecraft.player);
+            } else {
+                weaponRanged.powerJump(minecraft.player);
+            }
+
+            minecraft.options.keyJump.setDown(false); // MINECRAFT DEFAULT JUMP WILL OVERRIDE OTHERWISE
+//            ModPackets.sendToServer(new MovementCastC2SPacket("powerJump"));
         }
     }
 }

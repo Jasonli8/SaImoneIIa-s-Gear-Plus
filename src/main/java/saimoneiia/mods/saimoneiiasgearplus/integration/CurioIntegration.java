@@ -22,11 +22,9 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 import saimoneiia.mods.saimoneiiasgearplus.client.render.EquipmentRenderRegistry;
 import saimoneiia.mods.saimoneiiasgearplus.init.gear.BaseEquipment;
-import saimoneiia.mods.saimoneiiasgearplus.proxy.Proxy;
 import saimoneiia.mods.saimoneiiasgearplus.util.CapabilityUtil;
 import saimoneiia.mods.saimoneiiasgearplus.util.handler.EquipmentHandler;
 import top.theillusivec4.curios.api.*;
-import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 import top.theillusivec4.curios.api.client.ICurioRenderer;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 

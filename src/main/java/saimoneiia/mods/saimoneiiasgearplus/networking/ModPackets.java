@@ -55,6 +55,12 @@ public class ModPackets {
                 .encoder(BattleModeResourcesS2CPacket::toBytes)
                 .consumerNetworkThread(BattleModeResourcesS2CPacket::handle)
                 .add();
+
+        net.messageBuilder(MovementCastC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(MovementCastC2SPacket::new)
+                .encoder(MovementCastC2SPacket::toBytes)
+                .consumerNetworkThread(MovementCastC2SPacket::handle)
+                .add();
     }
 
     public static <MSG> void sendToServer(MSG message) {

@@ -1,10 +1,12 @@
 package saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.singlesword;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
 import saimoneiia.mods.saimoneiiasgearplus.client.render.item.MitoSingleSwordRenderer;
@@ -89,11 +91,19 @@ public class MitoSingleSword extends MeleeWeaponItem {
     }
 
     private void skill6(Player player) {
-        System.out.println("skill6 casted");
+        Vec3 moveVec = player.getLookAngle();
+        float moveAmount = 3F;
+        if (moveVec.y > 0)  moveVec = moveVec.multiply(1,0,1);
+        moveVec = moveVec.normalize().scale(moveAmount).add(player.getDeltaMovement());
+        player.setDeltaMovement(moveVec);
+        System.out.println("skill6 casted, quick dash example");
     }
 
     private void skill7(Player player) {
-        System.out.println("skill7 casted");
+        Vec3 playerLookDir = player.getLookAngle();
+        float moveAmount = 2F;
+        player.setDeltaMovement(playerLookDir.normalize().scale(moveAmount));
+        System.out.println("skill7 casted, pushing example");
     }
 
     @Override
