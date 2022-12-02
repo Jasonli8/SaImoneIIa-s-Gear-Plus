@@ -119,16 +119,14 @@ public class RangedWeaponItem extends BowItem implements IAnimatable, ISyncable 
     public void itemTick(ItemStack stack, LivingEntity livingEntity) {}
 
     public void dodge(Player player, Vec3 directionVec) {
-        System.out.println("dodging");
-        float moveAmount = 2F;
-        Vec3 movementVec = player.getLookAngle().multiply(1,0,1);
-        Vec3 moveVec = player.getDeltaMovement().multiply(directionVec).normalize().scale(moveAmount).add(player.getDeltaMovement());
+        float moveAmount = 1F;
+        Vec3 moveVec = directionVec.normalize().scale(moveAmount);
         player.setDeltaMovement(moveVec);
     }
 
     public void powerJump(Player player) {
-        float jumpHeight = 2F;
-        Vec3 moveVec = player.getDeltaMovement().multiply(0F, 1F, 0F).normalize().scale(jumpHeight).add(player.getDeltaMovement());
+        float jumpHeight = 0.8F;
+        Vec3 moveVec = Vec3.ZERO.add(0,1,0).normalize().scale(jumpHeight).add(player.getDeltaMovement());
         player.setDeltaMovement(moveVec);
     }
 

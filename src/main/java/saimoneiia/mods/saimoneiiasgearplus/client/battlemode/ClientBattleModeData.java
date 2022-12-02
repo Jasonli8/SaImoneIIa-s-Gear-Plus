@@ -19,10 +19,12 @@ public class ClientBattleModeData {
     public static int mana = 100;
     public static int manaRate = 1;
     public static int manaDelay = 20;
+    public static int ticksTillManaRecharge = 0;
     public static int energyMax = 100;
     public static int energy = 100;
     public static int energyRate = 1;
     public static int energyDelay = 20;
+    public static int ticksTillEnergyRecharge = 0;
     private static final Minecraft minecraft = Minecraft.getInstance();
 
     public static void setBattleMode(boolean isSet) { isBattleMode = isSet; }
@@ -59,10 +61,11 @@ public class ClientBattleModeData {
     public static boolean consumeMana(int points) {
         if (points > mana) return false;
         mana -= points;
+        ticksTillManaRecharge = manaDelay;
         return true;
     }
 
-    public static void restoreMana(int points) { mana = Math.max(manaMax, mana + points); }
+    public static void restoreMana(int points) { mana = Math.min(manaMax, mana + points); }
 
     public static void setMana(int manaMaxSet, int manaSet) {
         manaMax = manaMaxSet;
@@ -77,10 +80,11 @@ public class ClientBattleModeData {
     public static boolean consumeEnergy(int points) {
         if (points > energy) return false;
         energy -= points;
+        ticksTillEnergyRecharge = energyDelay;
         return true;
     }
 
-    public static void restoreEnergy(int points) { energy = Math.max(energyMax, energy + points); }
+    public static void restoreEnergy(int points) { energy = Math.min(energyMax, energy + points); }
 
     public static void setEnergy(int energyMaxSet, int energySet) {
         energyMax = energyMaxSet;
@@ -90,5 +94,16 @@ public class ClientBattleModeData {
     public static void setEnergyRate(int rate, int delay) {
         energyRate = rate;
         energyDelay = delay;
+    }
+
+    public static void tickResources() {
+        ticksTillManaRecharge = Math.max(ticksTillManaRecharge - 1, 0);
+        ticksTillEnergyRecharge = Math.max(ticksTillEnergyRecharge - 1, 0);
+        if (ticksTillManaRecharge == 0) {
+            restoreMana(manaRate);
+        }
+        if (ticksTillEnergyRecharge == 0) {
+            restoreEnergy(energyRate);
+        }
     }
 }

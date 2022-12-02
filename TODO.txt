@@ -1,9 +1,6 @@
 TimeLine---------------------------------------
-Stats
 Level gating
 Test enemy
-Skill casting expires once stale
-Battlemode UI and skill input feedback
 DIsable battlemode on death
 
 Optionals--------------------------------------
@@ -12,3 +9,29 @@ Animations
 Recipes
 Book Progression
 Book entries
+
+MITO--------------------------
+philosophy:
+fast, melee, dps, single target, physically durable, high skill
+
+skills:
+water spear (scale with mana consume, % consume)
+slash and dash
+high hitcount barrage
+damage exposure mark (triggered by hitcount)
+toggle mana armour (absorption)
+toggle water basics
+retrace (damage with distance/mana consumed, first hit (enemy or if self gets hit) applys damage to that target)
+
+armour passive: 
+mana armour absorbs more
+charm passive:
+on lethal damage, survive and gain full mana amour. resources no longer consumed, (water spear and retrace act like mana is consumed by factor 2), 30s (5 min cd)
+full passive:
+no recharge delays
+double recharge rate
+double resource maxes
+
+armour: minimal protection
+charm (limitless ocean): dropped by endgame boss
+main ingredient: ocean core, dropped by water elementals

@@ -45,6 +45,7 @@ public class BattleModeController {
 
     public static void combatTick(TickEvent.ClientTickEvent event) {
         // tick cooldowns and update states
+        ClientBattleModeData.tickResources();
         if (castCooldown > 0) {
             castCooldown--;
         } else {
@@ -163,7 +164,7 @@ public class BattleModeController {
 
     // DEFAULT MOVEMENTS
     private static void dodge() {
-        if (minecraft.player.isOnGround()) {
+        if (minecraft.player.isOnGround() && ClientBattleModeData.consumeEnergy(30)) {
             Vec3 directionVec = Vec3.ZERO;
             Vec3 moveVec = minecraft.player.getLookAngle().multiply(1,0,1).normalize();
             if (minecraft.options.keyLeft.isDown()) directionVec = directionVec.add(moveVec.yRot((float) Math.PI  / 2));
@@ -181,7 +182,7 @@ public class BattleModeController {
     }
 
     private static void powerJump() {
-        if (minecraft.player.isOnGround()) {
+        if (minecraft.player.isOnGround() && ClientBattleModeData.consumeEnergy(30)) {
             if (isMelee) {
                 weaponMelee.powerJump(minecraft.player);
             } else {
