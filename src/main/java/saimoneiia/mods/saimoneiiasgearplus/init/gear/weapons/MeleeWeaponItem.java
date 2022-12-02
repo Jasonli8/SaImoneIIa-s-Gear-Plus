@@ -124,13 +124,13 @@ public class MeleeWeaponItem extends SwordItem implements IAnimatable, ISyncable
     public void itemTick(ItemStack stack, LivingEntity livingEntity) {}
 
     public void dodge(Player player, Vec3 directionVec) {
-        float moveAmount = 2F;
+        float moveAmount = 1F;
         Vec3 moveVec = directionVec.normalize().scale(moveAmount);
         player.setDeltaMovement(moveVec);
     }
 
     public void powerJump(Player player) {
-        float jumpHeight = 1F;
+        float jumpHeight = 0.8F;
         Vec3 moveVec = Vec3.ZERO.add(0,1,0).normalize().scale(jumpHeight).add(player.getDeltaMovement());
         player.setDeltaMovement(moveVec);
     }

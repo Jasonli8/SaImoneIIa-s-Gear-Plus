@@ -37,9 +37,9 @@ public class BattleModeController {
 
     private static boolean pressedA = false;
     private static boolean pressedB = false;
+    private static boolean directionPrepped = false;
 
     public static int castCooldown = 0;
-    private static int dodgeCooldown = 0;
     public static int ticksSinceLastSkillInput = 0;
     public static boolean isSkillCasted = false;
 
@@ -49,9 +49,6 @@ public class BattleModeController {
             castCooldown--;
         } else {
             isSkillCasted = false;
-        }
-        if (dodgeCooldown > 0) {
-            dodgeCooldown--;
         }
 
         if (ClientBattleModeData.isBattleMode) {
@@ -95,10 +92,11 @@ public class BattleModeController {
             }
 
             // movement mechanics
+            if (directionPrepped && minecraft.options.keyShift.isDown()) {
+                dodge();
+            }
+            directionPrepped = (minecraft.options.keyUp.isDown() || minecraft.options.keyDown.isDown() || minecraft.options.keyLeft.isDown() || minecraft.options.keyRight.isDown()) && !minecraft.options.keyShift.isDown();
             if (minecraft.options.keyShift.isDown()) {
-                if (minecraft.options.keyUp.isDown() || minecraft.options.keyDown.isDown() || minecraft.options.keyLeft.isDown() || minecraft.options.keyRight.isDown()) {
-                    dodge();
-                }
                 if ( minecraft.options.keyJump.isDown()) {
                     powerJump();
                 }
@@ -165,7 +163,7 @@ public class BattleModeController {
 
     // DEFAULT MOVEMENTS
     private static void dodge() {
-        if (minecraft.player.isOnGround() && dodgeCooldown <= 0) {
+        if (minecraft.player.isOnGround()) {
             Vec3 directionVec = Vec3.ZERO;
             Vec3 moveVec = minecraft.player.getLookAngle().multiply(1,0,1).normalize();
             if (minecraft.options.keyLeft.isDown()) directionVec = directionVec.add(moveVec.yRot((float) Math.PI  / 2));
@@ -179,7 +177,6 @@ public class BattleModeController {
                 weaponRanged.dodge(minecraft.player, directionVec);
             }
 //            ModPackets.sendToServer(new MovementCastC2SPacket("dodge", directionVec));
-            dodgeCooldown = 20;
         }
     }
 
