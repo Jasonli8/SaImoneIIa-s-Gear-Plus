@@ -1,7 +1,6 @@
 TimeLine---------------------------------------
 Level gating
 Test enemy
-DIsable battlemode on death
 separate ticks into appropriate events
 
 Optionals--------------------------------------

@@ -22,6 +22,7 @@ public class BattleModeC2SPacket {
             ServerPlayer player = context.getSender();
 
             player.getCapability(BattleModeProvider.PLAYER_BATTLE_MODE).ifPresent(battleMode -> {
+                System.out.println("C2S: " + isBattleMode);
                 battleMode.setBattleMode(isBattleMode);
             });
 

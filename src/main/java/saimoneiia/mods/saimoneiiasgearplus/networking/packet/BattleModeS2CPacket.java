@@ -18,6 +18,7 @@ public class BattleModeS2CPacket {
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
+            System.out.println("S2C: " + isBattleMode);
             ClientBattleModeData.setBattleMode(isBattleMode);
         });
         return true;

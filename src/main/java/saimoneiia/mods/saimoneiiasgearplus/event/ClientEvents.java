@@ -120,6 +120,21 @@ public class ClientEvents {
         }
     }
 
+    @SubscribeEvent
+    public static void onKeyRegister(RegisterKeyMappingsEvent event) {
+        event.register(KeyBinding.TOGGLE_BATTLE_MODE_KEY);
+    }
+
+    @SubscribeEvent
+    public static void onClientSetup(FMLClientSetupEvent event) {
+        MenuScreens.register(ContainerInit.MEMORY_PROGRESSION.get(), MemoryProgressionScreen::new);
+    }
+
+    @SubscribeEvent
+    public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
+        event.registerAboveAll("skill", SkillInputOverlay.HUD_SKILL_CIRCLES);
+    }
+
     @Mod.EventBusSubscriber(modid=SaimoneiiasGearPlus.MODID, value=Dist.CLIENT)
     public static class ClientForgeEvents {
 
@@ -135,24 +150,6 @@ public class ClientEvents {
             if (event.phase == TickEvent.Phase.START) {
                 BattleModeController.combatTick(event);
             }
-        }
-    }
-
-    @Mod.EventBusSubscriber(modid=SaimoneiiasGearPlus.MODID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
-    public static class ClientModBusEvents {
-        @SubscribeEvent
-        public static void onKeyRegister(RegisterKeyMappingsEvent event) {
-            event.register(KeyBinding.TOGGLE_BATTLE_MODE_KEY);
-        }
-
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event) {
-            MenuScreens.register(ContainerInit.MEMORY_PROGRESSION.get(), MemoryProgressionScreen::new);
-        }
-
-        @SubscribeEvent
-        public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
-            event.registerAboveAll("skill", SkillInputOverlay.HUD_SKILL_CIRCLES);
         }
     }
 }

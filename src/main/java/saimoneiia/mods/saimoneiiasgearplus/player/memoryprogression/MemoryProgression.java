@@ -11,7 +11,7 @@ import saimoneiia.mods.saimoneiiasgearplus.util.MemoryLevelScaling;
 public class MemoryProgression {
     private int memProg;
 
-    private final String PROP_NAME = SaimoneiiasGearPlus.MODID + "memProg";
+    private final String PROP_NAME = SaimoneiiasGearPlus.MODID + "_memProg";
 
     public int getMem() {
         return memProg;

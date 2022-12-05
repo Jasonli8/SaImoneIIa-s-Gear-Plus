@@ -41,19 +41,40 @@ public class ModEvents {
 
     @SubscribeEvent
     public static void onPlayerJoinWorld(EntityJoinLevelEvent event) {
+        // player joining the level, not the server. These keep on ticking in-game
         if(!event.getLevel().isClientSide()) {
             if (event.getEntity() instanceof ServerPlayer player) {
                 player.getCapability(MemoryProgressionProvider.PLAYER_MEM_PROG).ifPresent(memProg -> {
                     ModPackets.sendToPlayer(new MemoryS2CPacket(memProg.getMem()), player);
                 });
                 player.getCapability(BattleModeProvider.PLAYER_BATTLE_MODE).ifPresent(battleMode -> {
-                    battleMode.isBattleMode = false;
                     battleMode.syncClient((ServerPlayer) player);
                 });
             }
-        } else {
-            ClientBattleModeData.isBattleMode = false;
         }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerLeaveWorld(EntityJoinLevelEvent event) {
+        // player leaving the level, not the server. These keep on ticking in-game
+//        event.getEntity().getCapability(BattleModeProvider.PLAYER_BATTLE_MODE).ifPresent(battlemode -> {
+//            battlemode.isBattleMode = false;
+//        });
+//        if (event.getLevel().isClientSide) ClientBattleModeData.isBattleMode = false;
+    }
+
+    @SubscribeEvent
+    public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
+        // joining the world/server
+    }
+
+    @SubscribeEvent
+    public static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent event) {
+        // leaving the world/server
+        event.getEntity().getCapability(BattleModeProvider.PLAYER_BATTLE_MODE).ifPresent(battleMode -> {
+            battleMode.isBattleMode = false;
+            battleMode.syncClient((ServerPlayer) event.getEntity());
+        });
     }
 
     @SubscribeEvent
@@ -69,11 +90,12 @@ public class ModEvents {
             event.getOriginal().reviveCaps();
             event.getOriginal().getCapability(BattleModeProvider.PLAYER_BATTLE_MODE).ifPresent(oldStore -> {
                 newStore.copyFrom(oldStore);
-                newStore.isBattleMode = false;
             });
+            newStore.isBattleMode = false;
+            newStore.syncClient((ServerPlayer) event.getEntity());
+
             event.getOriginal().invalidateCaps();
         });
-//        if (Minecraft.getInstance().level.isClientSide) ClientBattleModeData.isBattleMode = false;
     }
 
     @SubscribeEvent

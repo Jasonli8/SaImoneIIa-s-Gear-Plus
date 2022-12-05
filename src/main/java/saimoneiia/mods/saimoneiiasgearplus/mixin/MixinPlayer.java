@@ -25,7 +25,7 @@ public class MixinPlayer {
 
     @Inject(at = @At(value = "HEAD"), method = "blockActionRestricted", cancellable = true)
     public void saimoneiiasgearplus_blockActionRestricted(Level p_36188_, BlockPos p_36189_, GameType p_36190_, CallbackInfoReturnable<Boolean> cir) {
-        if (ClientBattleModeData.isBattleMode) {
+        if (ClientBattleModeData.isBattleMode && Minecraft.getInstance().player != null) {
             cir.setReturnValue(true);
             cir.cancel();
         }
@@ -33,7 +33,7 @@ public class MixinPlayer {
 
     @Inject(at = @At(value = "HEAD"), method = "interactOn", cancellable = true)
     public void saimoneiiasgearplus_interactOn(Entity p_36158_, InteractionHand p_36159_, CallbackInfoReturnable<InteractionResult> cir) {
-        if (ClientBattleModeData.isBattleMode) {
+        if (ClientBattleModeData.isBattleMode && Minecraft.getInstance().player != null) {
             cir.setReturnValue(InteractionResult.FAIL);
             cir.cancel();
         }
@@ -62,7 +62,7 @@ public class MixinPlayer {
 
     @Inject(at = @At(value = "HEAD"), method = "canEat", cancellable = true)
     public void saimoneiiasgearplus_canEat(boolean p_36392_, CallbackInfoReturnable<Boolean> cir) {
-        if (ClientBattleModeData.isBattleMode) {
+        if (ClientBattleModeData.isBattleMode && Minecraft.getInstance().player != null) {
             cir.setReturnValue(false);
             cir.cancel();
         }
@@ -70,7 +70,7 @@ public class MixinPlayer {
 
     @Inject(at = @At(value = "HEAD"), method = "eat", cancellable = true)
     public void saimoneiiasgearplus_eat(Level p_36185_, ItemStack p_36186_, CallbackInfoReturnable<ItemStack> cir) {
-        if (ClientBattleModeData.isBattleMode) {
+        if (ClientBattleModeData.isBattleMode && Minecraft.getInstance().player != null) {
             cir.setReturnValue(ItemStack.EMPTY);
             cir.cancel();
         }
@@ -78,7 +78,7 @@ public class MixinPlayer {
 
     @Inject(at = @At(value = "HEAD"), method = "mayBuild", cancellable = true)
     public void saimoneiiasgearplus_mayBuild(CallbackInfoReturnable<Boolean> cir) {
-        if (ClientBattleModeData.isBattleMode) {
+        if (ClientBattleModeData.isBattleMode && Minecraft.getInstance().player != null) {
             cir.setReturnValue(false);
             cir.cancel();
         }
@@ -86,7 +86,7 @@ public class MixinPlayer {
 
     @Inject(at = @At(value = "HEAD"), method = "mayUseItemAt", cancellable = true)
     public void saimoneiiasgearplus_mayUseItemAt(BlockPos p_36205_, Direction p_36206_, ItemStack p_36207_, CallbackInfoReturnable<Boolean> cir) {
-        if (ClientBattleModeData.isBattleMode) {
+        if (ClientBattleModeData.isBattleMode && Minecraft.getInstance().player != null) {
             cir.setReturnValue(false);
             cir.cancel();
         }
@@ -94,11 +94,13 @@ public class MixinPlayer {
 
     @Inject(at = @At(value = "HEAD"), method = "getItemBySlot", cancellable = true)
     public void saimoneiiasgearplus_getItemBySlot(EquipmentSlot p_36257_, CallbackInfoReturnable<ItemStack> cir) {
-        if (ClientBattleModeData.isBattleMode) {
+        if (ClientBattleModeData.isBattleMode && Minecraft.getInstance().player != null) {
             if (p_36257_ == EquipmentSlot.MAINHAND) {
                 cir.setReturnValue(ItemStack.EMPTY);
                 CuriosApi.getCuriosHelper().getCuriosHandler(Minecraft.getInstance().player).ifPresent(handler -> {
-                    cir.setReturnValue(handler.getCurios().get("weapon").getStacks().getStackInSlot(0));
+                    if (!handler.getCurios().isEmpty()) {
+                        cir.setReturnValue(handler.getCurios().get("weapon").getStacks().getStackInSlot(0));
+                    }
                 });
                 cir.cancel();
             } else if (p_36257_ == EquipmentSlot.OFFHAND) {
@@ -110,14 +112,14 @@ public class MixinPlayer {
 
     @Inject(at = @At(value = "HEAD"), method = "setItemSlot", cancellable = true)
     public void saimoneiiasgearplus_setItemSlot(EquipmentSlot p_36161_, ItemStack p_36162_, CallbackInfo cir) {
-        if (ClientBattleModeData.isBattleMode) {
+        if (ClientBattleModeData.isBattleMode && Minecraft.getInstance().player != null) {
             cir.cancel();
         }
     }
 
     @Inject(at = @At(value = "HEAD"), method = "getHandSlots", cancellable = true)
     public void saimoneiiasgearplus_getHandSlots(CallbackInfoReturnable<Iterable<ItemStack>> cir) {
-        if (ClientBattleModeData.isBattleMode) {
+        if (ClientBattleModeData.isBattleMode && Minecraft.getInstance().player != null) {
             CuriosApi.getCuriosHelper().getCuriosHandler(Minecraft.getInstance().player).ifPresent(handler -> {
                 cir.setReturnValue(Lists.newArrayList(handler.getCurios().get("weapon").getStacks().getStackInSlot(0), ItemStack.EMPTY));
             });

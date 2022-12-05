@@ -19,7 +19,11 @@ public class BattleMode {
     public int energyDelay = 20;
     private final String PROP_NAME = SaimoneiiasGearPlus.MODID + "battleMode";
 
-    public void setBattleMode(boolean isSet) { isBattleMode = isSet; }
+    public void setBattleMode(boolean isSet) {
+        System.out.println("Was: " + isBattleMode);
+        isBattleMode = isSet;
+        System.out.println("Now: " + isBattleMode);
+    }
 
     public void toggle() { isBattleMode = !isBattleMode; }
 
@@ -60,25 +64,48 @@ public class BattleMode {
     }
 
     public void syncClient(ServerPlayer player) {
+        System.out.println("Sync client from "+ player.toString() + " with " + isBattleMode);
         ModPackets.sendToPlayer(new BattleModeS2CPacket(isBattleMode), player);
         ModPackets.sendToPlayer(new BattleModeResourcesS2CPacket(manaMax, mana, manaRate, manaDelay, energyMax, energy, energyRate, energyDelay), player);
     }
 
     public void copyFrom(BattleMode source) {
+        System.out.println("copyFrom " + isBattleMode);
         this.isBattleMode = source.isBattleMode;
         this.mana = source.mana;
+        this.manaMax = source.manaMax;
+        this.manaRate = source.manaRate;
+        this.manaDelay = source.manaDelay;
         this.energy = source.energy;
+        this.energyRate = source.energyRate;
+        this.energyMax = source.energyMax;
+        this.energyDelay = source.energyDelay;
     }
 
     public void saveNBTData(CompoundTag nbt) {
-        nbt.putBoolean(PROP_NAME, isBattleMode);
-        nbt.putInt(PROP_NAME, mana);
-        nbt.putInt(PROP_NAME, energy);
+        System.out.println("saveNBTDate " + isBattleMode);
+        nbt.putBoolean(PROP_NAME + "_toggle", isBattleMode);
+        nbt.putInt(PROP_NAME + "_mana", mana);
+        nbt.putInt(PROP_NAME + "_mana_max", manaMax);
+        nbt.putInt(PROP_NAME + "_mana_rate", manaRate);
+        nbt.putInt(PROP_NAME + "_mana_delay", manaDelay);
+        nbt.putInt(PROP_NAME + "_energy", energy);
+        nbt.putInt(PROP_NAME + "_energy_max", energyMax);
+        nbt.putInt(PROP_NAME + "_energy_rate", energyRate);
+        nbt.putInt(PROP_NAME + "_energy_delay", energyDelay);
     }
 
     public void loadNBTData(CompoundTag nbt) {
-        isBattleMode = nbt.getBoolean(PROP_NAME);
-        mana = nbt.getInt(PROP_NAME);
-        energy = nbt.getInt(PROP_NAME);
+        System.out.println("loadNBTData " + isBattleMode);
+        isBattleMode = nbt.getBoolean(PROP_NAME + "_toggle");
+        mana = nbt.getInt(PROP_NAME + "_mana");
+        manaMax = nbt.getInt(PROP_NAME + "_mana_max");
+        manaRate = nbt.getInt(PROP_NAME + "_mana_rate");
+        manaDelay = nbt.getInt(PROP_NAME + "_mana_delay");
+        energy = nbt.getInt(PROP_NAME + "_energy");
+        energyMax = nbt.getInt(PROP_NAME + "_energy_max");
+        energyRate = nbt.getInt(PROP_NAME + "_energy_rate");
+        energyDelay = nbt.getInt(PROP_NAME + "_energy_delay");
+        System.out.println("loadNBTData2 " + isBattleMode);
     }
 }
