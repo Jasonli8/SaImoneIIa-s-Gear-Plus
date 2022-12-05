@@ -11,6 +11,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.TickEvent;
+import org.w3c.dom.ranges.Range;
 import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeData;
 import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.SkillInputOverlay;
 import saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.MeleeWeaponItem;
@@ -62,11 +63,21 @@ public class BattleModeController {
                     if (stacksHandler.getStacks().getStackInSlot(0).getItem() instanceof MeleeWeaponItem) {
                         weaponMelee = (MeleeWeaponItem) stacksHandler.getStacks().getStackInSlot(0).getItem();
                         isMelee = true;
-                    } else {
+                    } else if (stacksHandler.getStacks().getStackInSlot(0).getItem() instanceof RangedWeaponItem) {
                         weaponRanged = (RangedWeaponItem) stacksHandler.getStacks().getStackInSlot(0).getItem();
                         isMelee = false;
+                    } else {
+                        ClientBattleModeData.isBattleMode = false;
+                        return;
                     }
                 });
+            }
+
+            // ticks that should only be during battle
+            if (isMelee) {
+                weaponMelee.itemTick(minecraft.player);
+            } else {
+                weaponRanged.itemTick(minecraft.player);
             }
 
             if (castCooldown > 0) castCooldown--;

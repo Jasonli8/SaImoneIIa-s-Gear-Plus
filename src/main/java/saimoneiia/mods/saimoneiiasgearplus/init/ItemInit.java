@@ -13,6 +13,7 @@ import saimoneiia.mods.saimoneiiasgearplus.init.gear.accessories.hands.BasicHand
 import saimoneiia.mods.saimoneiiasgearplus.init.gear.accessories.necklaces.BasicNecklaces;
 import saimoneiia.mods.saimoneiiasgearplus.init.gear.accessories.rings.BasicRings;
 import saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.singlesword.MitoSingleSword;
+import saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.singlesword.MitoSingleSwordSheath;
 
 
 public class ItemInit {
@@ -21,7 +22,8 @@ public class ItemInit {
     ////////////////////////////////////////////////////////
 
     // list of items to register
-    // 1. examples
+    // 1. equipment models
+    public static final RegistryObject<MitoSingleSwordSheath> MITO_SWORD_SINGLE_SHEATH = ITEMS.register("mito_single_sword_sheath", MitoSingleSwordSheath::new);
 
     // 2. usable items
     public static final RegistryObject<MemoryNoteItem> MEMORY_NOTE = ITEMS.register("memory_note", () -> new MemoryNoteItem(new Item.Properties().tab(SaimoneiiasGearPlus.TAB).stacksTo(16)));
@@ -44,4 +46,5 @@ public class ItemInit {
     public static final RegistryObject<MitoSingleSword> MITO_SWORD_SINGLE = ITEMS.register("mito_single_sword", MitoSingleSword::new);
 
     // 6. armour
+
 }

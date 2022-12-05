@@ -13,6 +13,7 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeData;
+import saimoneiia.mods.saimoneiiasgearplus.util.handler.EquipmentHandler;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.controller.AnimationController;
@@ -79,6 +80,7 @@ public class RangedWeaponItem extends BowItem implements IAnimatable, ISyncable 
         GeckoLibNetwork.registerSyncable(this);
         this.name = name;
         this.skillInputs = skillInputs;
+        EquipmentHandler.instance.onInit(this);
     }
 
     public int getRequiredSkillInputs() { return skillInputs; }
@@ -116,7 +118,7 @@ public class RangedWeaponItem extends BowItem implements IAnimatable, ISyncable 
     }
 
     // override with acccessory effect function
-    public void itemTick(ItemStack stack, LivingEntity livingEntity) {}
+    public void itemTick(Player player) {}
 
     public void dodge(Player player, Vec3 directionVec) {
         float moveAmount = 1F;

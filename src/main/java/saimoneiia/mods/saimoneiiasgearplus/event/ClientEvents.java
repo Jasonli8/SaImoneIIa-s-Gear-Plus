@@ -43,23 +43,6 @@ import java.util.Random;
 @Mod.EventBusSubscriber(modid = SaimoneiiasGearPlus.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientEvents {
 
-//    @SubscribeEvent
-//    public static void registerRenderers(final EntityRenderersEvent.RegisterRenderers event) {
-//        event.registerEntityRenderer(EntityRegistry.GEO_EXAMPLE_ENTITY.get(), ExampleGeoRenderer::new);
-//        event.registerEntityRenderer(EntityRegistry.BIKE_ENTITY.get(), BikeGeoRenderer::new);
-//        event.registerEntityRenderer(EntityRegistry.CAR_ENTITY.get(), CarGeoRenderer::new);
-//        event.registerEntityRenderer(EntityRegistry.TEST_ENTITY.get(), TestGeoRenderer::new);
-//        event.registerEntityRenderer(EntityRegistry.GEOLAYERENTITY.get(), LERenderer::new);
-//        event.registerEntityRenderer(EntityRegistry.EXTENDED_RENDERER_EXAMPLE.get(),
-//                ExampleExtendedRendererEntityRenderer::new);
-//        event.registerEntityRenderer(EntityRegistry.TEXTURE_PER_BONE_EXAMPLE.get(),
-//                TexturePerBoneTestEntityRenderer::new);
-//
-//        event.registerBlockEntityRenderer(TileRegistry.HABITAT_TILE.get(), HabitatTileRenderer::new);
-//        event.registerBlockEntityRenderer(TileRegistry.FERTILIZER.get(), FertilizerTileRenderer::new);
-//
-//        event.registerEntityRenderer(EntityType.CREEPER, ReplacedCreeperRenderer::new);
-//    }
     @SubscribeEvent
     public static void onModelRegister(ModelEvent.RegisterAdditional evt) {
         var resourceManager = Minecraft.getInstance().getResourceManager();

@@ -1,5 +1,6 @@
 package saimoneiia.mods.saimoneiiasgearplus.event;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -13,6 +14,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.server.command.ConfigCommand;
 import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
+import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeData;
 import saimoneiia.mods.saimoneiiasgearplus.command.MemorySetCommand;
 import saimoneiia.mods.saimoneiiasgearplus.networking.ModPackets;
 import saimoneiia.mods.saimoneiiasgearplus.networking.packet.BattleModeResourcesS2CPacket;
@@ -45,9 +47,12 @@ public class ModEvents {
                     ModPackets.sendToPlayer(new MemoryS2CPacket(memProg.getMem()), player);
                 });
                 player.getCapability(BattleModeProvider.PLAYER_BATTLE_MODE).ifPresent(battleMode -> {
+                    battleMode.isBattleMode = false;
                     battleMode.syncClient((ServerPlayer) player);
                 });
             }
+        } else {
+            ClientBattleModeData.isBattleMode = false;
         }
     }
 
@@ -64,9 +69,11 @@ public class ModEvents {
             event.getOriginal().reviveCaps();
             event.getOriginal().getCapability(BattleModeProvider.PLAYER_BATTLE_MODE).ifPresent(oldStore -> {
                 newStore.copyFrom(oldStore);
+                newStore.isBattleMode = false;
             });
             event.getOriginal().invalidateCaps();
         });
+//        if (Minecraft.getInstance().level.isClientSide) ClientBattleModeData.isBattleMode = false;
     }
 
     @SubscribeEvent

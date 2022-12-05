@@ -22,9 +22,11 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 import saimoneiia.mods.saimoneiiasgearplus.client.render.EquipmentRenderRegistry;
 import saimoneiia.mods.saimoneiiasgearplus.init.gear.BaseEquipment;
+import saimoneiia.mods.saimoneiiasgearplus.proxy.Proxy;
 import saimoneiia.mods.saimoneiiasgearplus.util.CapabilityUtil;
 import saimoneiia.mods.saimoneiiasgearplus.util.handler.EquipmentHandler;
 import top.theillusivec4.curios.api.*;
+import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 import top.theillusivec4.curios.api.client.ICurioRenderer;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
@@ -42,17 +44,11 @@ public class CurioIntegration extends EquipmentHandler {
     }
     public static void sendImc(InterModEnqueueEvent evt) {
         InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> (new SlotTypeMessage.Builder("weapon").priority(1).icon(new ResourceLocation(CuriosApi.MODID, "slot/empty_curio_slot"))).build());
-        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.CHARM.getMessageBuilder().build());
-        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.NECKLACE.getMessageBuilder().build());
-        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.RING.getMessageBuilder().size(2).build());
-        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.HANDS.getMessageBuilder().size(2).build());
-        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.BELT.getMessageBuilder().build());
-        // TEMPORARY REMOVAL OF COSMETIC OPTION
-//        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.CHARM.getMessageBuilder().cosmetic().build());
-//        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.NECKLACE.getMessageBuilder().cosmetic().build());
-//        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.RING.getMessageBuilder().size(2).cosmetic().build());
-//        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.HANDS.getMessageBuilder().size(2).cosmetic().build());
-//        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.BELT.getMessageBuilder().cosmetic().build());
+        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.CHARM.getMessageBuilder().cosmetic().build());
+        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.NECKLACE.getMessageBuilder().cosmetic().build());
+        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.RING.getMessageBuilder().size(2).cosmetic().build());
+        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.HANDS.getMessageBuilder().size(2).cosmetic().build());
+        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.BELT.getMessageBuilder().cosmetic().build());
     }
 
     public ICapabilityProvider initCapability(ItemStack stack) {
@@ -61,7 +57,7 @@ public class CurioIntegration extends EquipmentHandler {
 
     @Override
     public void onInit(Item item) {
-//        Proxy.INSTANCE.runOnClient(() -> () -> CuriosRendererRegistry.register(item, () -> Renderer.INSTANCE)); // TEMPORARY REMOVAL UNTIL VISIBILITY/STYLE DECIDED
+        Proxy.INSTANCE.runOnClient(() -> () -> CuriosRendererRegistry.register(item, () -> Renderer.INSTANCE));
     }
 
     @Override
@@ -144,10 +140,13 @@ public class CurioIntegration extends EquipmentHandler {
                     float ageInTicks, float netHeadYaw, float headPitch) {
             LivingEntity livingEntity = slotContext.entity();
             M contextModel = renderLayerParent.getModel();
-            BaseEquipment item = (BaseEquipment) stack.getItem();
 
-            if (!item.hasRender(stack, livingEntity)) {
-                return;
+            if (stack.getItem() instanceof BaseEquipment) {
+                BaseEquipment item = (BaseEquipment) stack.getItem();
+
+                if (!item.hasRender(stack, livingEntity)) {
+                    return;
+                }
             }
 
             if (!(contextModel instanceof HumanoidModel<?>)) {
