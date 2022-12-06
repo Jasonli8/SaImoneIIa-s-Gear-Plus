@@ -118,14 +118,12 @@ public class MitoSingleSword extends MeleeWeaponItem {
     @Override
     protected void skill0(Player player) {
         // Ebb & Flow, water attacks
-        System.out.println("skill0 casted");
     }
 
     @Override
     protected void skill1(Player player) {
         // Channel, mana armour and enhanced movement
         isChannelled = !isChannelled;
-        System.out.println("skill1 casted");
     }
 
     @Override
@@ -136,38 +134,31 @@ public class MitoSingleSword extends MeleeWeaponItem {
         if (moveVec.y > 0)  moveVec = moveVec.multiply(1,0,1);
         moveVec = moveVec.normalize().scale(moveAmount).add(player.getDeltaMovement());
         player.setDeltaMovement(moveVec);
-        System.out.println("skill2 casted");
     }
 
     @Override
     protected void skill3(Player player) {
         // Cleave, 3 glaive slashes w large aoe
-        System.out.println("skill3 casted");
     }
 
     private void skill4(Player player) {
         // Rapids, hitcount barrage
-        System.out.println("skill4 casted");
     }
 
     private void skill5(Player player) {
         // Retrace
-        System.out.println("skill5 casted");
     }
 
     private void skill6(Player player) {
         // Hydrolance
-        System.out.println("skill6 casted");
     }
 
     private void skill7(Player player) {
         // Judgement of altair, hitcount mark
-        System.out.println("skill7 casted");
     }
 
     @Override
     public void onAnimationSync(int id, int state) {
-        System.out.println("onAnimationSync called");
         if (state == ANIM_OPEN) {
             final AnimationController<?> controller = GeckoLibUtil.getControllerForID(this.factory, id, controllerName);
             controller.clearAnimationCache();
