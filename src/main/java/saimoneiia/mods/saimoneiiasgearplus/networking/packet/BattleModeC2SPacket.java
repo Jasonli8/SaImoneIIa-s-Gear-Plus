@@ -19,13 +19,7 @@ public class BattleModeC2SPacket {
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
-            ServerPlayer player = context.getSender();
-
-            player.getCapability(BattleModeProvider.PLAYER_BATTLE_MODE).ifPresent(battleMode -> {
-                System.out.println("C2S: " + isBattleMode);
-                battleMode.setBattleMode(isBattleMode);
-            });
-
+            context.getSender().getCapability(BattleModeProvider.PLAYER_BATTLE_MODE).ifPresent(battleMode -> battleMode.setBattleMode(isBattleMode));
         });
         return true;
     }

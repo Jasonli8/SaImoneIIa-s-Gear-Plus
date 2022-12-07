@@ -3,8 +3,14 @@ package saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.mojang.math.Vector3f;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.ints.IntList;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -13,10 +19,15 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import org.jetbrains.annotations.Nullable;
 import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
 import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeData;
+import saimoneiia.mods.saimoneiiasgearplus.init.ItemInit;
+import saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.singlesword.MitoSingleSword;
+import saimoneiia.mods.saimoneiiasgearplus.player.battlemode.BattleModeProvider;
 import saimoneiia.mods.saimoneiiasgearplus.util.handler.EquipmentHandler;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -28,6 +39,7 @@ import software.bernie.geckolib3.network.GeckoLibNetwork;
 import software.bernie.geckolib3.network.ISyncable;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 public class MeleeWeaponItem extends SwordItem implements IAnimatable, ISyncable {
@@ -37,7 +49,20 @@ public class MeleeWeaponItem extends SwordItem implements IAnimatable, ISyncable
     public AnimationFactory factory = GeckoLibUtil.createFactory(this);
     public String controllerName = "controller";
 
+
     public static final int ANIM_OPEN = 0;
+
+    public boolean skillLockout = false;
+    protected int iTicks = 0;
+    protected int attackSurroundingTicks = 0;
+    protected float attackSurroundingAmount = 4.0F;
+    protected IntList entitiesHitInCurrentSKill = new IntArrayList();
+    protected List<EntityHitResult> hitResults = null;
+
+    protected int skill0Ticks = -1;
+    protected int skill1Ticks = -1;
+    protected int skill2Ticks = -1;
+    protected int skill3Ticks = -1;
 
 
     // NO LONG IN USE UNTIL INTEGRATION OF CURIO AND GECKOLIB CAN BE SOLVED
@@ -122,13 +147,17 @@ public class MeleeWeaponItem extends SwordItem implements IAnimatable, ISyncable
 //        });
     }
 
-    public void itemTick(Player player) {}
+    public void itemTick(ItemStack stack, LivingEntity livingEntity) {}
 
     public void dodge(Player player, Vec3 directionVec) {
         float moveAmount = 1F;
         Vec3 moveVec = directionVec.normalize().scale(moveAmount);
         player.setDeltaMovement(moveVec);
     }
+
+    public InteractionResult attackEntity(Player player, Level world, InteractionHand hand, Entity target, @Nullable EntityHitResult hit) { return InteractionResult.PASS; }
+
+    public void serverBasicAttack(ServerPlayer player) {}
 
     public void powerJump(Player player) {
         float jumpHeight = 0.8F;
@@ -143,7 +172,7 @@ public class MeleeWeaponItem extends SwordItem implements IAnimatable, ISyncable
     public void onEquip(ItemStack stack, LivingEntity entity) {}
 
     public void onUnequip(ItemStack stack, LivingEntity entity) {
-        ClientBattleModeData.refreshToggle();
+        Minecraft.getInstance().player.getCapability(BattleModeProvider.PLAYER_BATTLE_MODE).ifPresent(battleMode -> battleMode.refreshToggle());
     }
 
     public Multimap<Attribute, AttributeModifier> getEquippedAttributeModifiers(ItemStack stack) {

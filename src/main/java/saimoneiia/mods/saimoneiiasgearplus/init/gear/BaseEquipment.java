@@ -2,6 +2,7 @@ package saimoneiia.mods.saimoneiiasgearplus.init.gear;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -12,6 +13,7 @@ import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
 import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeData;
 import saimoneiia.mods.saimoneiiasgearplus.client.render.item.MitoSingleSwordRenderer;
+import saimoneiia.mods.saimoneiiasgearplus.player.battlemode.BattleModeProvider;
 import saimoneiia.mods.saimoneiiasgearplus.util.handler.EquipmentHandler;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -64,7 +66,7 @@ public class BaseEquipment extends Item implements IAnimatable, ISyncable {
     public void onEquip(ItemStack stack, LivingEntity entity) {}
 
     public void onUnequip(ItemStack stack, LivingEntity entity) {
-        ClientBattleModeData.refreshToggle();
+        Minecraft.getInstance().player.getCapability(BattleModeProvider.PLAYER_BATTLE_MODE).ifPresent(battleMode -> battleMode.refreshToggle());
     }
 
     public Multimap<Attribute, AttributeModifier> getEquippedAttributeModifiers(ItemStack stack) {

@@ -14,6 +14,8 @@ import saimoneiia.mods.saimoneiiasgearplus.init.BlockInit;
 import saimoneiia.mods.saimoneiiasgearplus.init.ContainerInit;
 import saimoneiia.mods.saimoneiiasgearplus.init.ItemInit;
 import saimoneiia.mods.saimoneiiasgearplus.init.gear.BaseEquipment;
+import saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.MeleeWeaponItem;
+import saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.RangedWeaponItem;
 import saimoneiia.mods.saimoneiiasgearplus.integration.CurioIntegration;
 import saimoneiia.mods.saimoneiiasgearplus.networking.ModPackets;
 import saimoneiia.mods.saimoneiiasgearplus.util.handler.EquipmentHandler;
@@ -59,7 +61,7 @@ public class SaimoneiiasGearPlus {
     private void attachItemCaps(AttachCapabilitiesEvent<ItemStack> e) {
         var stack = e.getObject();
 
-        if (stack.getItem() instanceof BaseEquipment
+        if ((stack.getItem() instanceof BaseEquipment || stack.getItem() instanceof MeleeWeaponItem || stack.getItem() instanceof RangedWeaponItem)
                 && EquipmentHandler.instance instanceof CurioIntegration ci) {
             e.addCapability(new ResourceLocation(SaimoneiiasGearPlus.MODID, "curio"), ci.initCapability(stack));
         }

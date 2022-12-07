@@ -25,85 +25,22 @@ public class ClientBattleModeData {
     public static int energyRate = 1;
     public static int energyDelay = 20;
     public static int ticksTillEnergyRecharge = 0;
-    private static final Minecraft minecraft = Minecraft.getInstance();
 
-    public static void setBattleMode(boolean isSet) { isBattleMode = isSet; }
-
-    public static void toggle() {
-        isBattleMode = !isBattleMode;
-        refreshToggle();
-    }
-
-    public static void refreshToggle() {
-        CuriosApi.getCuriosHelper().getCuriosHandler(minecraft.player).ifPresent(handler -> {
-            ICurioStacksHandler stacksHandler = handler.getCurios().get("weapon");
-            IDynamicStackHandler stackHandler = stacksHandler.getStacks();
-            ItemStack stack = stackHandler.getStackInSlot(0);
-            if (stack.isEmpty()) {
-                isBattleMode = false;
-            }
-        });
-        ModPackets.sendToServer(new BattleModeC2SPacket(isBattleMode));
-        onToggle();
-    }
-
-    private static void onToggle() {
-        if (isBattleMode) {
-            minecraft.player.sendSystemMessage(Component.literal("Activating Battle Mode!"));
-//            minecraft.options.setCameraType(CameraType.THIRD_PERSON_BACK);
-            minecraft.player.removeVehicle();
-        } else {
-            minecraft.player.sendSystemMessage(Component.literal("De-activating Battle Mode!"));
-//            minecraft.options.setCameraType(CameraType.FIRST_PERSON);
-        }
-    }
-
-    public static boolean consumeMana(int points) {
-        if (points > mana) return false;
-        mana -= points;
-        ticksTillManaRecharge = manaDelay;
-        return true;
-    }
-
-    public static void restoreMana(int points) { mana = Math.min(manaMax, mana + points); }
-
-    public static void setMana(int manaMaxSet, int manaSet) {
-        manaMax = manaMaxSet;
-        mana = manaSet;
-    }
-
-    public static void setManaRate(int rate, int delay) {
-        manaRate = rate;
-        manaDelay = delay;
-    }
-
-    public static boolean consumeEnergy(int points) {
-        if (points > energy) return false;
-        energy -= points;
-        ticksTillEnergyRecharge = energyDelay;
-        return true;
-    }
-
-    public static void restoreEnergy(int points) { energy = Math.min(energyMax, energy + points); }
-
-    public static void setEnergy(int energyMaxSet, int energySet) {
-        energyMax = energyMaxSet;
-        energy = energySet;
-    }
-
-    public static void setEnergyRate(int rate, int delay) {
-        energyRate = rate;
-        energyDelay = delay;
-    }
-
-    public static void tickResources() {
-        ticksTillManaRecharge = Math.max(ticksTillManaRecharge - 1, 0);
-        ticksTillEnergyRecharge = Math.max(ticksTillEnergyRecharge - 1, 0);
-        if (ticksTillManaRecharge == 0) {
-            restoreMana(manaRate);
-        }
-        if (ticksTillEnergyRecharge == 0) {
-            restoreEnergy(energyRate);
-        }
+    public static void setAll(
+            boolean isBattleMode,
+            int manaMax, int mana, int manaRate, int manaDelay, int ticksTillManaRecharge,
+            int energyMax, int energy, int energyRate, int energyDelay, int ticksTillEnergyRecharge
+    ) {
+        ClientBattleModeData.isBattleMode = isBattleMode;
+        ClientBattleModeData.manaMax = manaMax;
+        ClientBattleModeData.mana = mana;
+        ClientBattleModeData.manaRate = manaRate;
+        ClientBattleModeData.manaDelay = manaDelay;
+        ClientBattleModeData.ticksTillManaRecharge = ticksTillManaRecharge;
+        ClientBattleModeData.energyMax = energyMax;
+        ClientBattleModeData.energy = energy;
+        ClientBattleModeData.energyRate = energyRate;
+        ClientBattleModeData.energyDelay = energyDelay;
+        ClientBattleModeData.ticksTillEnergyRecharge = ticksTillEnergyRecharge;
     }
 }

@@ -20,8 +20,12 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import net.minecraftforge.items.wrapper.RecipeWrapper;
+import org.w3c.dom.ranges.Range;
 import saimoneiia.mods.saimoneiiasgearplus.client.render.EquipmentRenderRegistry;
 import saimoneiia.mods.saimoneiiasgearplus.init.gear.BaseEquipment;
+import saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.MeleeWeaponItem;
+import saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.RangedWeaponItem;
+import saimoneiia.mods.saimoneiiasgearplus.player.battlemode.BattleModeProvider;
 import saimoneiia.mods.saimoneiiasgearplus.proxy.Proxy;
 import saimoneiia.mods.saimoneiiasgearplus.util.CapabilityUtil;
 import saimoneiia.mods.saimoneiiasgearplus.util.handler.EquipmentHandler;
@@ -89,9 +93,18 @@ public class CurioIntegration extends EquipmentHandler {
             this.stack = stack;
         }
 
-        private BaseEquipment getItem() {
+        private BaseEquipment getBaseEquipmentItem() {
             return (BaseEquipment) stack.getItem();
         }
+
+        private MeleeWeaponItem getMeleeWeaponItemItem() {
+            return (MeleeWeaponItem) stack.getItem();
+        }
+
+        private RangedWeaponItem getRangedWeaponItemItem() {
+            return (RangedWeaponItem) stack.getItem();
+        }
+
 
         @Override
         public ItemStack getStack() {
@@ -100,22 +113,48 @@ public class CurioIntegration extends EquipmentHandler {
 
         @Override
         public void curioTick(SlotContext slotContext) {
-            getItem().itemTick(stack, slotContext.entity());
+            slotContext.entity().getCapability(BattleModeProvider.PLAYER_BATTLE_MODE).ifPresent(battleMode -> battleMode.tickResources());
+            if (stack.getItem() instanceof BaseEquipment) {
+                getBaseEquipmentItem().itemTick(stack, slotContext.entity());
+            } else if (stack.getItem() instanceof MeleeWeaponItem) {
+                getMeleeWeaponItemItem().itemTick(stack, slotContext.entity());
+            } else if (stack.getItem() instanceof RangedWeaponItem) {
+                getRangedWeaponItemItem().itemTick(stack, slotContext.entity());
+            }
         }
 
         @Override
         public boolean canEquip(SlotContext slotContext) {
-            return getItem().canEquip(stack, slotContext.entity());
+            if (stack.getItem() instanceof BaseEquipment) {
+                return getBaseEquipmentItem().canEquip(stack, slotContext.entity());
+            } else if (stack.getItem() instanceof MeleeWeaponItem) {
+                return getMeleeWeaponItemItem().canEquip(stack, slotContext.entity());
+            } else if (stack.getItem() instanceof RangedWeaponItem) {
+                return getRangedWeaponItemItem().canEquip(stack, slotContext.entity());
+            }
+            return false;
         }
 
         @Override
         public void onUnequip(SlotContext slotContext, ItemStack newStack) {
-            getItem().onUnequip(stack, slotContext.entity());
+            if (stack.getItem() instanceof BaseEquipment) {
+                getBaseEquipmentItem().onUnequip(stack, slotContext.entity());
+            } else if (stack.getItem() instanceof MeleeWeaponItem) {
+                getMeleeWeaponItemItem().onUnequip(stack, slotContext.entity());
+            } else if (stack.getItem() instanceof RangedWeaponItem) {
+                getRangedWeaponItemItem().onUnequip(stack, slotContext.entity());
+            }
         }
 
         @Override
         public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid) {
-            return getItem().getEquippedAttributeModifiers(stack);
+            if (stack.getItem() instanceof BaseEquipment) {
+                return getBaseEquipmentItem().getEquippedAttributeModifiers(stack);
+            } else if (stack.getItem() instanceof MeleeWeaponItem) {
+                return getMeleeWeaponItemItem().getEquippedAttributeModifiers(stack);
+            } else {
+                return getRangedWeaponItemItem().getEquippedAttributeModifiers(stack);
+            }
         }
 
         @Override

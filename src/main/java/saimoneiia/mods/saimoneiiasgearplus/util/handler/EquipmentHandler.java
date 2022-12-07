@@ -20,7 +20,6 @@ public abstract class EquipmentHandler {
 
     public static void init() {
         if (instance == null) {
-            CurioIntegration.init();
             instance = CurioIntegration.tryCreateEquipmentHandler();
         }
 

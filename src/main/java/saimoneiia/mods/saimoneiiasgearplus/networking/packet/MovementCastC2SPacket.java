@@ -46,23 +46,17 @@ public class MovementCastC2SPacket {
                 System.out.println(action);
                 ICurioStacksHandler stacksHandler = handler.getCurios().get("weapon");
                 if (stacksHandler.getStacks().getStackInSlot(0).getItem() instanceof MeleeWeaponItem) {
-                    System.out.println("melee weapon");
                     MeleeWeaponItem weapon = (MeleeWeaponItem) stacksHandler.getStacks().getStackInSlot(0).getItem();
                     if (action.equals("dodge")) {
-                        System.out.println("packet dodge");
                         weapon.dodge(player, directionVec);
                     } else if (action.equals("powerJump")) {
-                        System.out.println("packet jump");
                         weapon.powerJump(player);
                     }
                 } else {
-                    System.out.println("ranged weapon");
                     RangedWeaponItem weapon = (RangedWeaponItem) stacksHandler.getStacks().getStackInSlot(0).getItem();
                     if (action.equals("dodge")) {
-                        System.out.println("packet dodge");
                         weapon.dodge(player, directionVec);
                     } else if (action.equals("powerJump")) {
-                        System.out.println("packet jump");
                         weapon.powerJump(player);
                     }
                 }

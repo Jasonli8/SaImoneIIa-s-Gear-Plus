@@ -30,9 +30,10 @@ import org.jetbrains.annotations.Nullable;
 import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
 import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeData;
 import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.controller.BattleModeController;
-import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.SkillInputOverlay;
+import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.gui.SkillInputOverlay;
 import saimoneiia.mods.saimoneiiasgearplus.client.memoryprogression.MemoryProgressionScreen;
 import saimoneiia.mods.saimoneiiasgearplus.init.ContainerInit;
+import saimoneiia.mods.saimoneiiasgearplus.player.battlemode.BattleModeProvider;
 import saimoneiia.mods.saimoneiiasgearplus.util.handler.ModifiedRenderableModels;
 import saimoneiia.mods.saimoneiiasgearplus.client.keybindings.KeyBinding;
 
@@ -141,7 +142,7 @@ public class ClientEvents {
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event) {
             if(KeyBinding.TOGGLE_BATTLE_MODE_KEY.consumeClick()) {
-                ClientBattleModeData.toggle();
+                Minecraft.getInstance().player.getCapability(BattleModeProvider.PLAYER_BATTLE_MODE).ifPresent(battleMode -> battleMode.toggle());
             }
         }
 

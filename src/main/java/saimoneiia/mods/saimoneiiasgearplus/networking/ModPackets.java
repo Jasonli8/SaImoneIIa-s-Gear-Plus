@@ -32,12 +32,6 @@ public class ModPackets {
                 .consumerNetworkThread(MemoryS2CPacket::handle)
                 .add();
 
-        net.messageBuilder(BattleModeS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
-                .decoder(BattleModeS2CPacket::new)
-                .encoder(BattleModeS2CPacket::toBytes)
-                .consumerNetworkThread(BattleModeS2CPacket::handle)
-                .add();
-
         net.messageBuilder(BattleModeC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(BattleModeC2SPacket::new)
                 .encoder(BattleModeC2SPacket::toBytes)
@@ -60,6 +54,18 @@ public class ModPackets {
                 .decoder(MovementCastC2SPacket::new)
                 .encoder(MovementCastC2SPacket::toBytes)
                 .consumerNetworkThread(MovementCastC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(PlayerSpecialSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(PlayerSpecialSyncS2CPacket::new)
+                .encoder(PlayerSpecialSyncS2CPacket::toBytes)
+                .consumerNetworkThread(PlayerSpecialSyncS2CPacket::handle)
+                .add();
+
+        net.messageBuilder(BasicAttackC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(BasicAttackC2SPacket::new)
+                .encoder(BasicAttackC2SPacket::toBytes)
+                .consumerNetworkThread(BasicAttackC2SPacket::handle)
                 .add();
     }
 

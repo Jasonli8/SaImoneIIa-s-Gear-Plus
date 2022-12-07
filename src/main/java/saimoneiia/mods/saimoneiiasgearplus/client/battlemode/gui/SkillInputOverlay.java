@@ -1,12 +1,14 @@
-package saimoneiia.mods.saimoneiiasgearplus.client.battlemode;
+package saimoneiia.mods.saimoneiiasgearplus.client.battlemode.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
 import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.controller.BattleModeController;
+import saimoneiia.mods.saimoneiiasgearplus.player.battlemode.BattleModeProvider;
 
 import java.util.Stack;
 
@@ -53,17 +55,19 @@ public class SkillInputOverlay {
     };
 
     public static void setCirclesToRender() {
-        if (ClientBattleModeData.isBattleMode) {
-            if (BattleModeController.skillInput > 0) {
-                int circleIndexToRender = BattleModeController.skillInput;
-                int parseSkillCode = BattleModeController.skillCode;
-                if (circleIndexToRender != 0) circleToRender.clear();
-                while (circleIndexToRender > 0) {
-                    circleToRender.push(2 * (circleIndexToRender - 1) - ((parseSkillCode + 1) % 2));
-                    parseSkillCode = parseSkillCode / 2;
-                    circleIndexToRender--;
+        Minecraft.getInstance().player.getCapability(BattleModeProvider.PLAYER_BATTLE_MODE).ifPresent(battleMode -> {
+            if (battleMode.isBattleMode) {
+                if (BattleModeController.skillInput > 0) {
+                    int circleIndexToRender = BattleModeController.skillInput;
+                    int parseSkillCode = BattleModeController.skillCode;
+                    if (circleIndexToRender != 0) circleToRender.clear();
+                    while (circleIndexToRender > 0) {
+                        circleToRender.push(2 * (circleIndexToRender - 1) - ((parseSkillCode + 1) % 2));
+                        parseSkillCode = parseSkillCode / 2;
+                        circleIndexToRender--;
+                    }
                 }
             }
-        }
+        });
     }
 }

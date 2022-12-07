@@ -9,6 +9,7 @@ Animations
 Recipes
 Book Progression
 Book entries
+Use templates to consolidate ranged, melee, and accessory items
 
 MITO--------------------------
 philosophy:
