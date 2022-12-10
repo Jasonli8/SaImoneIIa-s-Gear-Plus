@@ -1,8 +1,13 @@
 package saimoneiia.mods.saimoneiiasgearplus.event;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.*;
+import com.mojang.math.Matrix4f;
+import net.minecraft.client.Game;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
@@ -16,10 +21,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ForgeHooksClient;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -27,16 +29,19 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.lwjgl.opengl.GL11;
 import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
 import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.ClientBattleModeData;
 import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.controller.BattleModeController;
 import saimoneiia.mods.saimoneiiasgearplus.client.battlemode.gui.SkillInputOverlay;
+import saimoneiia.mods.saimoneiiasgearplus.client.core.ClientTickHandler;
 import saimoneiia.mods.saimoneiiasgearplus.client.memoryprogression.MemoryProgressionScreen;
 import saimoneiia.mods.saimoneiiasgearplus.init.ContainerInit;
 import saimoneiia.mods.saimoneiiasgearplus.player.battlemode.BattleModeProvider;
 import saimoneiia.mods.saimoneiiasgearplus.util.handler.ModifiedRenderableModels;
 import saimoneiia.mods.saimoneiiasgearplus.client.keybindings.KeyBinding;
 
+import java.nio.Buffer;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -150,6 +155,15 @@ public class ClientEvents {
         public static void preProcessKeyBindings(TickEvent.ClientTickEvent event) {
             if (event.phase == TickEvent.Phase.START) {
                 BattleModeController.combatTick(event);
+            }
+        }
+
+        @SubscribeEvent
+        public static void renderTicks(TickEvent.RenderTickEvent evt) {
+            if (evt.phase == TickEvent.Phase.START) {
+                ClientTickHandler.renderTick(evt.renderTickTime);
+            } else if (evt.phase == TickEvent.Phase.END) {
+                ClientTickHandler.clientTickEnd(Minecraft.getInstance());
             }
         }
     }

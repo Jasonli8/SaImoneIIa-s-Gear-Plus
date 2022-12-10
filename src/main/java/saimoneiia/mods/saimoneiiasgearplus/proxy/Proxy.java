@@ -1,5 +1,7 @@
 package saimoneiia.mods.saimoneiiasgearplus.proxy;
 
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.loading.FMLLoader;
 
@@ -17,4 +19,10 @@ public interface Proxy {
     }
 
     default void runOnClient(Supplier<Runnable> s) {}
+
+    default void mitoRetraceFX(Level level, Vec3 origin) {
+        mitoRetraceFX(level, origin, System.nanoTime());;
+    }
+
+    default void mitoRetraceFX(Level level, Vec3 origin, long seed) {}
 }

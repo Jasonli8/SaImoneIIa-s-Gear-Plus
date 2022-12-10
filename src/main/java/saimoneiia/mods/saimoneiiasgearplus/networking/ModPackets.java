@@ -67,6 +67,12 @@ public class ModPackets {
                 .encoder(BasicAttackC2SPacket::toBytes)
                 .consumerNetworkThread(BasicAttackC2SPacket::handle)
                 .add();
+
+        net.messageBuilder(EffectS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(EffectS2CPacket::new)
+                .encoder(EffectS2CPacket::toBytes)
+                .consumerNetworkThread(EffectS2CPacket::handle)
+                .add();
     }
 
     public static <MSG> void sendToServer(MSG message) {

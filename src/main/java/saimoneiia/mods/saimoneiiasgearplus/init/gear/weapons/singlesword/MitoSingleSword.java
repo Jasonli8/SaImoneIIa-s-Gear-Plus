@@ -1,12 +1,17 @@
 package saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.singlesword;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.*;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Vector3d;
 import com.mojang.math.Vector3f;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -25,9 +30,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.minecraftforge.client.model.DynamicFluidContainerModel;
 import org.jetbrains.annotations.Nullable;
+import org.lwjgl.opengl.GL11;
 import saimoneiia.mods.saimoneiiasgearplus.SaimoneiiasGearPlus;
+import saimoneiia.mods.saimoneiiasgearplus.client.particle.EffectType;
 import saimoneiia.mods.saimoneiiasgearplus.client.render.EquipmentRenderRegistry;
 import saimoneiia.mods.saimoneiiasgearplus.client.render.EquipmentRenderer;
 import saimoneiia.mods.saimoneiiasgearplus.client.render.item.MitoSingleSwordRenderer;
@@ -35,6 +44,8 @@ import saimoneiia.mods.saimoneiiasgearplus.client.render.item.MitoSingleSwordShe
 import saimoneiia.mods.saimoneiiasgearplus.init.ItemInit;
 import saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.BaseWeaponTeir;
 import saimoneiia.mods.saimoneiiasgearplus.init.gear.weapons.MeleeWeaponItem;
+import saimoneiia.mods.saimoneiiasgearplus.networking.ModPackets;
+import saimoneiia.mods.saimoneiiasgearplus.networking.packet.EffectS2CPacket;
 import saimoneiia.mods.saimoneiiasgearplus.player.battlemode.BattleModeProvider;
 import saimoneiia.mods.saimoneiiasgearplus.player.playerspecial.PlayerSpecial;
 import saimoneiia.mods.saimoneiiasgearplus.player.playerspecial.PlayerSpecialProvider;
@@ -54,6 +65,12 @@ public class MitoSingleSword extends MeleeWeaponItem {
     private boolean isFlowed = false;
 
     private int skill4Ticks = -1;
+
+    float tempX = 0;
+    float tempY = 0;
+    float tempZ = 0;
+
+    Vec3 temp = Vec3.ZERO;
 
 
     public MitoSingleSword() {
@@ -76,6 +93,7 @@ public class MitoSingleSword extends MeleeWeaponItem {
 
     @Override
     public void itemTick(ItemStack stack, LivingEntity livingEntity) {
+
         livingEntity.getCapability(BattleModeProvider.PLAYER_BATTLE_MODE).ifPresent(battleMode -> {
             livingEntity.getCapability(PlayerSpecialProvider.PLAYER_PLAYER_SPECIAL).ifPresent(playerSpecial -> {
 
@@ -315,6 +333,9 @@ public class MitoSingleSword extends MeleeWeaponItem {
 
     private void skill7(Player player) {
         // Judgement of altair, hitcount mark
+        if (!player.level.isClientSide) {
+            ModPackets.sendToPlayer(new EffectS2CPacket(EffectType.MITO_RETRACE_EFFECT, player.getPosition(0)), (ServerPlayer) player);
+        }
     }
 
     @Override
